@@ -14,11 +14,14 @@ class Face {
   
   PVector frame=new PVector();
   // gesture
-  float mouthHeight, mouthWidth;
-  float eyeLeft, eyeRight;
-  float eyebrowLeft, eyebrowRight;
-  float jaw;
-  float nostrils;
+  float mouthHeight=0;
+  float mouthWidth=0;
+  float eyeLeft=0;
+  float eyeRight=0;
+  float eyebrowLeft=0;
+  float eyebrowRight=0;
+  float jaw=0;
+  float nostrils=0;
   
   //face model
   float eyeX =20;
@@ -35,14 +38,20 @@ class Face {
 
   
   Face() {
-    for(PVector mouthVertex : mouth){
-      mouthVertex = new PVector();
+    for(int i=0;i<mouth.length;++i){
+      mouth[i] = new PVector();
     }
   }
   
   void updateMouthLocal(){
-    tX=mouthWidth/2;
-    tY=mouthHeight/2;
+    float tX=mouthWidth/2;
+    float tY=mouthHeight/2;
+    mouth[0].x=-tX;mouth[4].x=tX;
+    mouth[2].y=-tY;mouth[6].y=tY;
+    mouth[1].x=mouth[7].x=-tX/2;mouth[3].x=mouth[5].x=tX/2;
+    mouth[1].y=mouth[3].y=-3*tY/4;
+    mouth[7].y=mouth[5].y=3*tY/4;
+  
   }
 
   // parse an OSC message from FaceOSC
