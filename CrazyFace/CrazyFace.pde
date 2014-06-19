@@ -39,7 +39,10 @@ void draw() {
     }
     mouth.endShape(CLOSE);
     shape(mouth);
-   
+    if (inPolyCheck(mouseX, mouseY,face.gmouth)==1){
+      stroke(255, 0, 0);
+      ellipse(mouseX, mouseY, 50, 50);
+    }
 //    print(face.frame.x+"\t"+face.frame.y+"\t"+face.frame.z+"\n");
 //     print(face.toString());
   }
