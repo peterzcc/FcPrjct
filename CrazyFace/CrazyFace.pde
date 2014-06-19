@@ -29,6 +29,7 @@ void draw() {
 //    ellipse(0+100, 20+100, face.mouthWidth* 3, face.mouthHeight * 3);
 
     face.mouthLocalUpdate();
+    face.scaleUpdate();
     face.mouthGlobalUpdate();
     mouth=createShape();
     mouth.beginShape();

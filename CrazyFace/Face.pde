@@ -64,6 +64,12 @@ class Face {
     transform(mouth,gmouth,frame);
   }
 
+  void scaleUpdate(){
+    for (int i=0;i<mouth.length;++i){
+      mouth[i].mult(poseScale);
+    }
+  }
+
   // parse an OSC message from FaceOSC
   // returns true if a message was handled
   boolean parseOSC(OscMessage m) {
