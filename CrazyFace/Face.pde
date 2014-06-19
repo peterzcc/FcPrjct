@@ -20,14 +20,23 @@ class Face {
   float jaw;
   float nostrils;
   
-  //position model
+  //face model
   float eyeX =20;
+  float eyeLY;
+  float eyeRY;
   float mouthY=10;
+  float eyeLength = 2;
+  float eyeWidth =1;
+
+  PVector[] eyeL;
+  PVector[] eyeR;
+  PVector[] mouth = new PVector[8];
   
+
   
-  
-  
-  Face() {}
+  Face() {
+
+  }
   
   // parse an OSC message from FaceOSC
   // returns true if a message was handled
