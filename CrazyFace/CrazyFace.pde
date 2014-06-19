@@ -33,18 +33,19 @@ void draw() {
   stroke(0);
 
   if (face.found > 0) {
-    translate(face.posePosition.x, face.posePosition.y);
-    scale(face.poseScale);
+    // translate(face.posePosition.x, face.posePosition.y);
+    // scale(face.poseScale);
     noFill();
     ellipse(-20, (face.eyeLeft * -9), 20, 7);
     ellipse(20, (face.eyeRight * -9), 20, 7);
 //    ellipse(0+100, 20+100, face.mouthWidth* 3, face.mouthHeight * 3);
 
-    face.updateMouthLocal();
+    face.mouthLocalUpdate();
+    face.mouthGlobalUpdate();
     mouth=createShape();
     mouth.beginShape();
     //mouth.noStroke();
-    for(PVector mouthVertex : face.mouth){
+    for(PVector mouthVertex : face.gmouth){
      print(mouthVertex.x+"\t"+mouthVertex.y+"\n");
       mouth.vertex(mouthVertex.x,mouthVertex.y);
     }

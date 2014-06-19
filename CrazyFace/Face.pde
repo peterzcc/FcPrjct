@@ -31,19 +31,22 @@ class Face {
   float eyeLength = 2;
   float eyeWidth =1;
 
+  //Local positions
   PVector[] eyeL;
   PVector[] eyeR;
   PVector[] mouth = new PVector[8];
   
-
+  //Global positions
+  PVector[] gmouth = new PVector[8];
   
   Face() {
     for(int i=0;i<mouth.length;++i){
       mouth[i] = new PVector();
+      gmouth[i] = new PVector();
     }
   }
   
-  void updateMouthLocal(){
+  void mouthLocalUpdate(){
     float tX=mouthWidth/2;
     float tY=mouthHeight/2;
     mouth[0].x=-tX;mouth[4].x=tX;
@@ -55,7 +58,10 @@ class Face {
     for(int i =0; i<mouth.length;++i){
       mouth[i].y+=10;
     }
-  
+  }
+
+  void mouthGlobalUpdate(){
+    transform(mouth,gmouth,frame);
   }
 
   // parse an OSC message from FaceOSC
