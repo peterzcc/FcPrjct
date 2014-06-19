@@ -51,6 +51,10 @@ class Face {
     mouth[1].x=mouth[7].x=-tX/2;mouth[3].x=mouth[5].x=tX/2;
     mouth[1].y=mouth[3].y=-3*tY/4;
     mouth[7].y=mouth[5].y=3*tY/4;
+    mouth[0].y=mouth[4].y=mouth[2].x=mouth[6].x=0;
+    for(int i =0; i<mouth.length;++i){
+      mouth[i].y+=10;
+    }
   
   }
 
