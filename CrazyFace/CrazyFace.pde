@@ -43,7 +43,7 @@ void draw() {
       stroke(255, 0, 0);
       ellipse(mouseX, mouseY, 50, 50);
     }
-//    print(face.frame.x+"\t"+face.frame.y+"\t"+face.frame.z+"\n");
+
 //     print(face.toString());
   }
 }

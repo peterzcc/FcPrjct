@@ -1,48 +1,5 @@
 
-PVector[]leftEye(){
-PVector[]eyeL=new PVector[3];
-eyeL[0]=new PVector(width/8,2*height/6);
-eyeL[1]=new PVector(2*width/8,height/6);
-eyeL[2]=new PVector(3*width/8,2*height/6);
-return eyeL;
-}
-PVector[]rightEye(){
-PVector[]eyeR=new PVector[3];
-eyeR[0]=new PVector(5*width/8,2*height/6);
-eyeR[1]=new PVector(6*width/8,height/6);
-eyeR[2]=new PVector(7*width/8,2*height/6);
-return eyeR;
 
-}
-PVector[]mouthUp(){
-PVector[]M=new PVector[7] ;
-M[0]=new PVector(2*width/8,4*height/6);
-M[1]=new PVector(3*width/8,(3*height/6)-step);
-M[2]=new PVector(4*width/8,(7*height/12)-step);
-M[3]=new PVector(5*width/8,(3*height/6)-step);
-M[4]=new PVector(6*width/8,4*height/6);
-M[5]=new PVector(5*width/8,(4*height/6)-2*step);
-M[6]=new PVector(3*width/8,(4*height/6)-2*step);
-
-
-
-return M;
-
-}
-PVector[]mouthDown(){
-PVector[]M=new PVector[7] ;
-M[0]=new PVector(2*width/8,4*height/6);
-M[1]=new PVector(3*width/8,(5*height/6)+step);
-M[2]=new PVector(4*width/8,(9*height/12)+step);
-M[3]=new PVector(5*width/8,(5*height/6)+step);
-M[4]=new PVector(6*width/8,4*height/6);
-M[5]=new PVector(5*width/8,(4*height/6)+2*step);
-M[6]=new PVector(3*width/8,(4*height/6)+2*step);
-
-
-return M;
-
-}
 
 
 
