@@ -13,7 +13,7 @@ void transform(PVector[] localPose,PVector[] globalPose,PVector coordinate)
 {
   float cosTheta = cos(coordinate.z);
   float sinTheta = sin(coordinate.z);
-  int e=-1;
+  int e=1;
   for(int i=0;i<localPose.length;++i){
     globalPose[i].x=localPose[i].x*e*cosTheta-localPose[i].y*sinTheta+coordinate.x;
     globalPose[i].y=localPose[i].x*e*sinTheta+localPose[i].y*cosTheta+coordinate.y;
