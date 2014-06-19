@@ -35,9 +35,16 @@ class Face {
 
   
   Face() {
-
+    for(PVector mouthVertex : mouth){
+      mouthVertex = new PVector();
+    }
   }
   
+  void updateMouthLocal(){
+    tX=mouthWidth/2;
+    tY=mouthHeight/2;
+  }
+
   // parse an OSC message from FaceOSC
   // returns true if a message was handled
   boolean parseOSC(OscMessage m) {
