@@ -94,7 +94,7 @@ class Face {
     
   }
   
-    void eyeLeftLocalUpdate(){
+  void eyeLeftLocalUpdate(){
     eyeL[0].x=-eyeWidth/2; eyeL[0].y=0;
     eyeL[1].x=-eyeWidth/4; eyeL[1].y=-eyeHeight;
     eyeL[2].x=eyeWidth/4;eyeL[2].y=-eyeHeight;
@@ -123,29 +123,13 @@ class Face {
     }
   }
   
-  /*
-  void eyeBroLeftLocalUpdate(){
-    eyeBR[0].x=-eyebroWidth;eyeBR[0].y=0;
-    eyeBR[1].x=-eyebroWidth*0.717;eyeBR[1].y=-eyebroHeight*0.717;
-    eyeBR[2].x=0;eyeBR[2].y=-eyebroHeight;
-    eyeBR[3].x=eyebroWidth*0.717;eyeBR[3].y=-eyebroHeight*0.717;
-    eyeBR[4].x=eyebroWidth;eyeBR[4].y=0;
-    
-    for(int i=0;i<eyeBR.length;++i)
-    {
-      eyeBL[i].x=eyeBR[i].x;eyeBL[i].y=eyeBR[i].y;
-      eyeBL[i].x-=20;
-      eyeBL[i].y-=eyebrowLeft*5;
-    }
-  }
-  
-  */
   void eyeBroRightLocalUpdate(){
     eyeBR[0].x=-eyebroWidth;eyeBR[0].y=0;
     eyeBR[1].x=-eyebroWidth*0.717;eyeBR[1].y=-eyebroHeight*0.717;
     eyeBR[2].x=0;eyeBR[2].y=-eyebroHeight;
     eyeBR[3].x=eyebroWidth*0.717;eyeBR[3].y=-eyebroHeight*0.717;
     eyeBR[4].x=eyebroWidth;eyeBR[4].y=0;
+     
     
     for(int i=0;i<eyeBR.length;++i)
     {
@@ -154,7 +138,7 @@ class Face {
     }
   }
   
-  void mouthGlobalUpdate(){
+void mouthGlobalUpdate(){
     transform(mouth,gmouth,frame);
   }
 

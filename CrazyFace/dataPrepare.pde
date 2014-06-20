@@ -1,4 +1,14 @@
 
+float browCenterY=-1.4604;
+
+PVector CenterOfWeight(PVector[] vertices){
+  PVector center = new PVector();
+  for (PVector vertex : vertices){
+    center.add(vertex);
+  }
+  center.div(vertices.length);
+  return center;
+}
 
 
 

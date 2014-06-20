@@ -2,8 +2,20 @@
 import oscP5.*;
 OscP5 oscP5;
 
+import shiffman.box2d.*;
+import org.jbox2d.common.*;
+import org.jbox2d.dynamics.joints.*;
+import org.jbox2d.collision.shapes.*;
+import org.jbox2d.collision.shapes.Shape;
+import org.jbox2d.common.*;
+import org.jbox2d.dynamics.*;
+import org.jbox2d.dynamics.contacts.*;
+Box2DProcessing box2d;
+
 // our FaceOSC tracked face dat
 Face face = new Face();
+ArrayList<Particle> particles;
+
 PShape mouth;
 PShape leftEye; 
 PShape rightEye;
@@ -13,22 +25,35 @@ float step=0;
 
 void setup() {
   size(640, 480, P2D);
-  frameRate(30);
-
+  frameRate(60);
   oscP5 = new OscP5(this, 8338);
+  
+  // Initialize box2d
+  box2d = new Box2DProcessing(this);
+  box2d.createWorld();
+  //To be deleted
+  particles = new ArrayList<Particle>();
 }
 
 void draw() {  
   background(200);
   stroke(0);
-
+  
+  if (random(1) < 0.1) {
+    float sz = random(4,8);
+    particles.add(new Particle(random(150,250),-20,sz));
+  }
+  box2d.step();
+    for (int i = particles.size()-1; i >= 0; i--) {
+    Particle p = particles.get(i);
+    p.display();
+    if (p.done()) {
+      particles.remove(i);
+    }
+  }
+  
   if (face.found > 0) {
-    // translate(face.posePosition.x, face.posePosition.y);
-    // scale(face.poseScale);
     noFill();
-  //  ellipse(-20+face.posePosition.x, (face.eyeLeft * -5)+face.posePosition.y, 20, 7);
-  //  ellipse(20+face.posePosition.x, (face.eyeRight * -9)+face.posePosition.y, 20, 7);
-//    ellipse(0+100, 20+100, face.mouthWidth* 3, face.mouthHeight * 3);
     face.eyeRightLocalUpdate();
     face.eyeRightGlobalUpdate();
     rightEye=createShape();
@@ -58,18 +83,7 @@ void draw() {
     }
     rightBro.endShape(CLOSE);
     shape(rightBro);
-    
-    /*
-    face.eyeBroLeftLocalUpdate();
-    face.eyeBroLeftGlobalUpdate();
-    leftBro=createShape();
-    leftBro.beginShape();
-    for(PVector leftBroVertex : face.geyeBL){
-      leftBro.vertex(leftBroVertex.x,leftBroVertex.y);
-    }
-    leftBro.endShape();
-    shape(leftBro);
-    */
+
     face.eyeBroLeftLocalUpdate();
     face.eyeBroLeftGlobalUpdate();
     leftBro=createShape();
@@ -87,7 +101,6 @@ void draw() {
     mouth=createShape();
     mouth.beginShape();
     for(PVector mouthVertex : face.gmouth){
-     print(mouthVertex.x+"\t"+mouthVertex.y+"\n");
       mouth.vertex(mouthVertex.x,mouthVertex.y);
     }
     mouth.endShape(CLOSE);
