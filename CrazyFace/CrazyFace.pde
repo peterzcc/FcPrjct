@@ -13,7 +13,7 @@ import org.jbox2d.dynamics.contacts.*;
 Box2DProcessing box2d;
 
 // our FaceOSC tracked face dat
-Face face = new Face();
+Face face;
 ArrayList<Particle> particles;
 
 PShape mouth;
@@ -33,15 +33,17 @@ void setup() {
   box2d.createWorld();
   //To be deleted
   particles = new ArrayList<Particle>();
+  face = new Face();
 }
 
 void draw() {  
   background(200);
   stroke(0);
   
+  // Simulating particles
   if (random(1) < 0.1) {
     float sz = random(4,8);
-    particles.add(new Particle(random(150,250),-20,sz));
+    particles.add(new Particle(random(250,300),-20,sz));
   }
   box2d.step();
     for (int i = particles.size()-1; i >= 0; i--) {
@@ -105,7 +107,7 @@ void draw() {
     }
     mouth.endShape(CLOSE);
     shape(mouth);
-   
+    
 //    print(face.frame.x+"\t"+face.frame.y+"\t"+face.frame.z+"\n");
 //     print(face.toString());
   }

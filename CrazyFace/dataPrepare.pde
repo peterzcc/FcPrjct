@@ -1,4 +1,5 @@
 
+
 float browCenterY=-1.4604;
 
 PVector CenterOfWeight(PVector[] vertices){
@@ -10,7 +11,13 @@ PVector CenterOfWeight(PVector[] vertices){
   return center;
 }
 
-
+Vec2[] PVectorToVec2(PVector[] points){
+  Vec2[] result=new Vec2[points.length];
+  for (int i=points.length-1;i>=0;--i){
+    result[points.length-1-i]=box2d.coordPixelsToWorld(points[i].x,points[i].y);
+  }
+  return result;
+}
 
 //_________________________________________________________________________
 
