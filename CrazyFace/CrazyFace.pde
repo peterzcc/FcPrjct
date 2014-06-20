@@ -7,6 +7,8 @@ Face face = new Face();
 PShape mouth;
 PShape leftEye; 
 PShape rightEye;
+PShape leftBro;
+PShape rightBro;
 float step=0;
 
 void setup() {
@@ -24,12 +26,63 @@ void draw() {
     // translate(face.posePosition.x, face.posePosition.y);
     // scale(face.poseScale);
     noFill();
-    ellipse(-20+face.posePosition.x, (face.eyeLeft * -9)+face.posePosition.y, 20, 7);
-    ellipse(20+face.posePosition.x, (face.eyeRight * -9)+face.posePosition.y, 20, 7);
+  //  ellipse(-20+face.posePosition.x, (face.eyeLeft * -5)+face.posePosition.y, 20, 7);
+  //  ellipse(20+face.posePosition.x, (face.eyeRight * -9)+face.posePosition.y, 20, 7);
 //    ellipse(0+100, 20+100, face.mouthWidth* 3, face.mouthHeight * 3);
-
+    face.eyeRightLocalUpdate();
+    face.eyeRightGlobalUpdate();
+    rightEye=createShape();
+    rightEye.beginShape();
+    for(PVector rightEyeVertex :face.geyeR){
+      rightEye.vertex(rightEyeVertex.x,rightEyeVertex.y);
+    }
+    rightEye.endShape(CLOSE);
+    shape(rightEye);
+    
+    face.eyeLeftLocalUpdate();
+    face.eyeLeftGlobalUpdate();
+    leftEye=createShape();
+    leftEye.beginShape();
+    for(PVector leftEyeVertex :face.geyeL){
+      leftEye.vertex(leftEyeVertex.x,leftEyeVertex.y);
+    }
+    leftEye.endShape(CLOSE);
+    shape(leftEye);
+    
+    face.eyeBroRightLocalUpdate();
+    face.eyeBroRightGlobalUpdate();
+    rightBro=createShape();
+    rightBro.beginShape();
+    for(PVector rightBroVertex : face.geyeBR){
+      rightBro.vertex(rightBroVertex.x,rightBroVertex.y);
+    }
+    rightBro.endShape(CLOSE);
+    shape(rightBro);
+    
+    /*
+    face.eyeBroLeftLocalUpdate();
+    face.eyeBroLeftGlobalUpdate();
+    leftBro=createShape();
+    leftBro.beginShape();
+    for(PVector leftBroVertex : face.geyeBL){
+      leftBro.vertex(leftBroVertex.x,leftBroVertex.y);
+    }
+    leftBro.endShape();
+    shape(leftBro);
+    */
+    face.eyeBroLeftLocalUpdate();
+    face.eyeBroLeftGlobalUpdate();
+    leftBro=createShape();
+    leftBro.beginShape();
+    for(PVector leftBroVertex : face.geyeBL){
+      leftBro.vertex(leftBroVertex.x,leftBroVertex.y);
+    }
+    leftBro.endShape(CLOSE);
+    shape(leftBro);
+    
+    
+    
     face.mouthLocalUpdate();
-    face.scaleUpdate();
     face.mouthGlobalUpdate();
     mouth=createShape();
     mouth.beginShape();
@@ -39,11 +92,8 @@ void draw() {
     }
     mouth.endShape(CLOSE);
     shape(mouth);
-    if (inPolyCheck(mouseX, mouseY,face.gmouth)==1){
-      stroke(255, 0, 0);
-      ellipse(mouseX, mouseY, 50, 50);
-    }
-
+   
+//    print(face.frame.x+"\t"+face.frame.y+"\t"+face.frame.z+"\n");
 //     print(face.toString());
   }
 }

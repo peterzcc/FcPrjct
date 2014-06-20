@@ -28,21 +28,41 @@ class Face {
   float eyeLY;
   float eyeRY;
   float mouthY=10;
-  float eyeLength = 2;
-  float eyeWidth =1;
+  float eyeHeight = 5;
+  float eyeWidth =4*eyeHeight;
+  float eyebroHeight=3;
+  float eyebroWidth=10;
 
   //Local positions
-  PVector[] eyeL;
-  PVector[] eyeR;
+  PVector[] eyeL =new PVector[6];
+  PVector[] eyeR =new PVector[6];
   PVector[] mouth = new PVector[8];
-  
+  PVector[] eyeBR= new PVector[5];
+  PVector[] eyeBL= new PVector[5];
   //Global positions
   PVector[] gmouth = new PVector[8];
+  PVector[] geyeL =new PVector[6];
+  PVector[] geyeR =new PVector[6];
+  PVector[] geyeBR= new PVector[5];
+  PVector[] geyeBL= new PVector[5];  
   
   Face() {
     for(int i=0;i<mouth.length;++i){
       mouth[i] = new PVector();
       gmouth[i] = new PVector();
+    }
+    for(int i=0;i<eyeL.length;++i){
+      eyeL[i]=new PVector();
+      geyeL[i]=new PVector();
+      eyeR[i]=new PVector();
+      geyeR[i]=new PVector();
+    }
+    for(int i=0;i<eyeBL.length;++i){
+      eyeBR[i]=new PVector();
+      eyeBL[i]=new PVector();
+      geyeBL[i]=new PVector();
+      geyeBR[i]=new PVector();
+      
     }
   }
   
@@ -56,21 +76,102 @@ class Face {
     mouth[7].y=mouth[5].y=3*tY/4;
     mouth[0].y=mouth[4].y=mouth[2].x=mouth[6].x=0;
     for(int i =0; i<mouth.length;++i){
-      mouth[i].mult(3);
       mouth[i].y+=mouthY;
     }
   }
-
+  void eyeRightLocalUpdate(){
+    eyeR[0].x=-eyeWidth/2; eyeR[0].y=0;
+    eyeR[1].x=-eyeWidth/4; eyeR[1].y=-eyeHeight;
+    eyeR[2].x=eyeWidth/4;eyeR[2].y=-eyeHeight;
+    eyeR[3].x=eyeWidth/2; eyeR[3].y=0;
+    eyeR[4].x=eyeWidth/4; eyeR[4].y=eyeHeight;
+    eyeR[5].x=-eyeWidth/4; eyeR[5].y=eyeHeight;
+    
+    for(int i=0;i<eyeR.length;++i){
+      eyeR[i].x+=20;
+      eyeR[i].y-=eyeRight*9;
+    }
+    
+  }
+  
+    void eyeLeftLocalUpdate(){
+    eyeL[0].x=-eyeWidth/2; eyeL[0].y=0;
+    eyeL[1].x=-eyeWidth/4; eyeL[1].y=-eyeHeight;
+    eyeL[2].x=eyeWidth/4;eyeL[2].y=-eyeHeight;
+    eyeL[3].x=eyeWidth/2; eyeL[3].y=0;
+    eyeL[4].x=eyeWidth/4; eyeL[4].y=eyeHeight;
+    eyeL[5].x=-eyeWidth/4; eyeL[5].y=eyeHeight;
+    
+    for(int i=0;i<eyeR.length;++i){
+      eyeL[i].x-=20;
+      eyeL[i].y-=eyeLeft*9;
+    }
+    
+  }
+  
+  void eyeBroLeftLocalUpdate(){
+    eyeBL[0].x=-eyebroWidth;eyeBL[0].y=0;
+    eyeBL[1].x=-eyebroWidth*0.717;eyeBL[1].y=-eyebroHeight*0.717;
+    eyeBL[2].x=0;eyeBL[2].y=-eyebroHeight;
+    eyeBL[3].x=eyebroWidth*0.717;eyeBL[3].y=-eyebroHeight*0.717;
+    eyeBL[4].x=eyebroWidth;eyeBL[4].y=0;
+    
+    for(int i=0;i<eyeBL.length;++i)
+    {
+      eyeBL[i].x-=20;
+      eyeBL[i].y-=eyebrowLeft*5;
+    }
+  }
+  
+  /*
+  void eyeBroLeftLocalUpdate(){
+    eyeBR[0].x=-eyebroWidth;eyeBR[0].y=0;
+    eyeBR[1].x=-eyebroWidth*0.717;eyeBR[1].y=-eyebroHeight*0.717;
+    eyeBR[2].x=0;eyeBR[2].y=-eyebroHeight;
+    eyeBR[3].x=eyebroWidth*0.717;eyeBR[3].y=-eyebroHeight*0.717;
+    eyeBR[4].x=eyebroWidth;eyeBR[4].y=0;
+    
+    for(int i=0;i<eyeBR.length;++i)
+    {
+      eyeBL[i].x=eyeBR[i].x;eyeBL[i].y=eyeBR[i].y;
+      eyeBL[i].x-=20;
+      eyeBL[i].y-=eyebrowLeft*5;
+    }
+  }
+  
+  */
+  void eyeBroRightLocalUpdate(){
+    eyeBR[0].x=-eyebroWidth;eyeBR[0].y=0;
+    eyeBR[1].x=-eyebroWidth*0.717;eyeBR[1].y=-eyebroHeight*0.717;
+    eyeBR[2].x=0;eyeBR[2].y=-eyebroHeight;
+    eyeBR[3].x=eyebroWidth*0.717;eyeBR[3].y=-eyebroHeight*0.717;
+    eyeBR[4].x=eyebroWidth;eyeBR[4].y=0;
+    
+    for(int i=0;i<eyeBR.length;++i)
+    {
+      eyeBR[i].x+=20;
+      eyeBR[i].y-=eyebrowRight*5;
+    }
+  }
+  
   void mouthGlobalUpdate(){
     transform(mouth,gmouth,frame);
   }
 
-  void scaleUpdate(){
-    for (int i=0;i<mouth.length;++i){
-      mouth[i].mult(poseScale);
-    }
-  }
+void eyeRightGlobalUpdate(){
+  transform(eyeR,geyeR,frame);
+}
 
+void eyeLeftGlobalUpdate(){
+  transform(eyeL,geyeL,frame);
+}
+
+void eyeBroLeftGlobalUpdate(){
+  transform(eyeBL,geyeBL,frame);
+}
+void eyeBroRightGlobalUpdate(){
+  transform(eyeBR,geyeBR,frame);
+}
   // parse an OSC message from FaceOSC
   // returns true if a message was handled
   boolean parseOSC(OscMessage m) {
