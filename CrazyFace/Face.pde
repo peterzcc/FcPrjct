@@ -167,11 +167,24 @@ void makeBody(){
   BodyDef beyeBRdef = new BodyDef();
   beyeBRdef.position = box2d.coordPixelsToWorld(width/2, height/2);
   beyeBRdef.type = BodyType.KINEMATIC;
+  beyeBRdef.bullet=true;
   beyeBR = box2d.world.createBody(beyeBRdef);
-  CircleShape cs = new CircleShape();
-  cs.m_radius = box2d.scalarPixelsToWorld(20);
+  
+ // CircleShape cs = new CircleShape();
+  //cs.m_radius = box2d.scalarPixelsToWorld(20);
+  
+  PolygonShape sd= new PolygonShape();
+  Vec2[] vertices=new Vec2[5];
+  vertices[0]=box2d.vectorPixelsToWorld(new Vec2(-eyebroWidth/2,0));
+  vertices[1]=box2d.vectorPixelsToWorld(new Vec2(-eyebroWidth*0.717,-eyebroHeight*0.717));
+  vertices[2]=box2d.vectorPixelsToWorld(new Vec2(0,-eyebroHeight));
+  vertices[3]=box2d.vectorPixelsToWorld(new Vec2(eyebroWidth*0.717,-eyebroHeight*0.717));
+  vertices[4]=box2d.vectorPixelsToWorld(new Vec2(eyebroWidth/2,0));
+  
+  sd.set(vertices,vertices.length);
+  
   FixtureDef fd = new FixtureDef();
-  fd.shape = cs;
+  fd.shape = sd;
   fd.density = 10.0;
   beyeBR.createFixture(fd);
 
@@ -188,8 +201,8 @@ void display(){
 //  fill(color(255, 0, 0));
   stroke(0);
   strokeWeight(1);
-  ellipse(0, 0, 20*2, 20*2);
-  line(0, 0, 20, 0);
+ // ellipse(0, 0, 20*2, 20*2);
+  //line(0, 0, 20, 0);
   popMatrix();
 }
 
