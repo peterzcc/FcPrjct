@@ -46,13 +46,14 @@ void draw() {
     particles.add(new Particle(random(250,300),-20,sz));
   }
   box2d.step();
-    for (int i = particles.size()-1; i >= 0; i--) {
+  for (int i = particles.size()-1; i >= 0; i--) {
     Particle p = particles.get(i);
     p.display();
     if (p.done()) {
       particles.remove(i);
     }
   }
+  face.track();
   
   if (face.found > 0) {
     noFill();
@@ -108,6 +109,7 @@ void draw() {
     mouth.endShape(CLOSE);
     shape(mouth);
     
+    face.display();
 //    print(face.frame.x+"\t"+face.frame.y+"\t"+face.frame.z+"\n");
 //     print(face.toString());
   }

@@ -52,7 +52,6 @@ class Particle {
     float a = body.getAngle();
     pushMatrix();
     translate(pos.x, pos.y);
-
     rotate(-a);
     fill(col);
     stroke(0);
