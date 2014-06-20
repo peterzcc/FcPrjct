@@ -46,6 +46,8 @@ class Face {
   PVector[] geyeBR= new PVector[5];
   PVector[] geyeBL= new PVector[5];  
   
+  Body beyeBR;
+
   Face() {
     for(int i=0;i<mouth.length;++i){
       mouth[i] = new PVector();
@@ -156,6 +158,12 @@ void eyeBroLeftGlobalUpdate(){
 void eyeBroRightGlobalUpdate(){
   transform(eyeBR,geyeBR,frame);
 }
+
+
+void makeBody(){
+  
+}
+
   // parse an OSC message from FaceOSC
   // returns true if a message was handled
   boolean parseOSC(OscMessage m) {
