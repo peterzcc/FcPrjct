@@ -45,7 +45,8 @@ class Face {
   PVector[] geyeR =new PVector[6];
   PVector[] geyeBR= new PVector[5];
   PVector[] geyeBL= new PVector[5];  
-  
+
+  PVector geyeBRCenter = new PVector();
   Body beyeBR;
 
   Face() {
@@ -66,6 +67,7 @@ class Face {
       geyeBR[i]=new PVector();
       
     }
+    makeBody();
   }
   
   void mouthLocalUpdate(){
@@ -162,7 +164,51 @@ void eyeBroRightGlobalUpdate(){
 
 void makeBody(){
   
+  BodyDef beyeBRdef = new BodyDef();
+  beyeBRdef.position = box2d.coordPixelsToWorld(width/2, height/2);
+  beyeBRdef.type = BodyType.KINEMATIC;
+  beyeBR = box2d.world.createBody(beyeBRdef);
+  CircleShape cs = new CircleShape();
+  cs.m_radius = box2d.scalarPixelsToWorld(20);
+  FixtureDef fd = new FixtureDef();
+  fd.shape = cs;
+  fd.density = 10.0;
+  beyeBR.createFixture(fd);
+
 }
+
+void display(){
+  Vec2 pos = box2d.getBodyPixelCoord(beyeBR);
+  // Get its angle of rotation
+  noFill();
+  float a = beyeBR.getAngle();
+  pushMatrix();
+  translate(pos.x, pos.y);
+  rotate(-a);
+//  fill(color(255, 0, 0));
+  stroke(0);
+  strokeWeight(1);
+  ellipse(0, 0, 20*2, 20*2);
+  line(0, 0, 20, 0);
+  popMatrix();
+}
+
+
+void track(){
+  geyeBRCenter = PVector.add(geyeBR[0],geyeBR[4]);
+  geyeBRCenter.div(2);
+  Vec2 pos = beyeBR.getWorldCenter();
+  Vec2 target = box2d.coordPixelsToWorld(geyeBRCenter.x,geyeBRCenter.y);
+  Vec2 diff = target.sub(pos);
+  diff.mulLocal(80);
+  beyeBR.setLinearVelocity(diff);
+  float omega = frame.z-beyeBR.getAngle();
+  beyeBR.setAngularVelocity(omega*20);
+}
+
+
+
+
 
   // parse an OSC message from FaceOSC
   // returns true if a message was handled
