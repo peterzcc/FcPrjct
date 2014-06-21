@@ -47,7 +47,9 @@ class Face {
   PVector[] geyeBL= new PVector[5];  
 
   PVector geyeBRCenter = new PVector();
+  PVector geyeBLCenter = new PVector();
   Body beyeBR;
+  Body beyeBL;
 
   Face() {
     for(int i=0;i<mouth.length;++i){
@@ -67,7 +69,9 @@ class Face {
       geyeBR[i]=new PVector();
       
     }
-    makeBody();
+    makeBodyR();
+    makeBodyL();
+    
   }
   
   void mouthLocalUpdate(){
@@ -81,6 +85,7 @@ class Face {
     mouth[0].y=mouth[4].y=mouth[2].x=mouth[6].x=0;
     for(int i =0; i<mouth.length;++i){
       mouth[i].y+=mouthY;
+      mouth[i].mult(4);
     }
   }
   void eyeRightLocalUpdate(){
@@ -94,6 +99,7 @@ class Face {
     for(int i=0;i<eyeR.length;++i){
       eyeR[i].x+=20;
       eyeR[i].y-=eyeRight*9;
+      eyeR[i].mult(2);
     }
     
   }
@@ -109,6 +115,7 @@ class Face {
     for(int i=0;i<eyeR.length;++i){
       eyeL[i].x-=20;
       eyeL[i].y-=eyeLeft*9;
+      eyeL[i].mult(2);
     }
     
   }
@@ -123,7 +130,8 @@ class Face {
     for(int i=0;i<eyeBL.length;++i)
     {
       eyeBL[i].x-=20;
-      eyeBL[i].y-=eyebrowLeft*5;
+      eyeBL[i].y-=eyebrowLeft*6;
+      eyeBL[i].mult(2);
     }
   }
   
@@ -138,7 +146,8 @@ class Face {
     for(int i=0;i<eyeBR.length;++i)
     {
       eyeBR[i].x+=20;
-      eyeBR[i].y-=eyebrowRight*5;
+      eyeBR[i].y-=eyebrowRight*6;
+      eyeBR[i].mult(2);
     }
   }
   
@@ -162,7 +171,7 @@ void eyeBroRightGlobalUpdate(){
 }
 
 
-void makeBody(){
+void makeBodyR(){
   
   BodyDef beyeBRdef = new BodyDef();
   beyeBRdef.position = box2d.coordPixelsToWorld(width/2, height/2);
@@ -180,15 +189,46 @@ void makeBody(){
   vertices[2]=box2d.vectorPixelsToWorld(new Vec2(0,-eyebroHeight));
   vertices[3]=box2d.vectorPixelsToWorld(new Vec2(eyebroWidth*0.717,-eyebroHeight*0.717));
   vertices[4]=box2d.vectorPixelsToWorld(new Vec2(eyebroWidth/2,0));
-  
+  for (int i=0;i<vertices.length;++i){
+    vertices[i].mulLocal(2);
+  }
   sd.set(vertices,vertices.length);
   
   FixtureDef fd = new FixtureDef();
   fd.shape = sd;
   fd.density = 10.0;
   beyeBR.createFixture(fd);
-
 }
+
+void makeBodyL(){
+  
+  BodyDef beyeBLdef = new BodyDef();
+  beyeBLdef.position = box2d.coordPixelsToWorld(width/2, height/2);
+  beyeBLdef.type = BodyType.KINEMATIC;
+  beyeBLdef.bullet=true;
+  beyeBL = box2d.world.createBody(beyeBLdef);
+  
+ // CircleShape cs = new CircleShape();
+  //cs.m_radius = box2d.scalarPixelsToWorld(20);
+  
+  PolygonShape sd= new PolygonShape();
+  Vec2[] vertices=new Vec2[5];
+  vertices[0]=box2d.vectorPixelsToWorld(new Vec2(-eyebroWidth/2,0));
+  vertices[1]=box2d.vectorPixelsToWorld(new Vec2(-eyebroWidth*0.717,-eyebroHeight*0.717));
+  vertices[2]=box2d.vectorPixelsToWorld(new Vec2(0,-eyebroHeight));
+  vertices[3]=box2d.vectorPixelsToWorld(new Vec2(eyebroWidth*0.717,-eyebroHeight*0.717));
+  vertices[4]=box2d.vectorPixelsToWorld(new Vec2(eyebroWidth/2,0));
+  for (int i=0;i<vertices.length;++i){
+    vertices[i].mulLocal(2);
+  }
+  sd.set(vertices,vertices.length);
+  
+  FixtureDef fd = new FixtureDef();
+  fd.shape = sd;
+  fd.density = 10.0;
+  beyeBL.createFixture(fd);
+}
+
 
 void display(){
   Vec2 pos = box2d.getBodyPixelCoord(beyeBR);
@@ -200,6 +240,7 @@ void display(){
   rotate(-a);
 //  fill(color(255, 0, 0));
   stroke(0);
+ // scale(10);
   strokeWeight(1);
  // ellipse(0, 0, 20*2, 20*2);
   //line(0, 0, 20, 0);
@@ -207,7 +248,7 @@ void display(){
 }
 
 
-void track(){
+void track1(){
   geyeBRCenter = PVector.add(geyeBR[0],geyeBR[4]);
   geyeBRCenter.div(2);
   Vec2 pos = beyeBR.getWorldCenter();
@@ -218,7 +259,17 @@ void track(){
   float omega = frame.z-beyeBR.getAngle();
   beyeBR.setAngularVelocity(omega*20);
 }
-
+void track2(){
+  geyeBLCenter = PVector.add(geyeBL[0],geyeBL[4]);
+  geyeBLCenter.div(2);
+  Vec2 pos = beyeBL.getWorldCenter();
+  Vec2 target = box2d.coordPixelsToWorld(geyeBLCenter.x,geyeBLCenter.y);
+  Vec2 diff = target.sub(pos);
+  diff.mulLocal(80);
+  beyeBL.setLinearVelocity(diff);
+  float omega = frame.z-beyeBL.getAngle();
+  beyeBL.setAngularVelocity(omega*20);
+}
 
 
 

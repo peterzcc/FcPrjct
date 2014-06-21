@@ -10,6 +10,9 @@ class Particle {
   // We need to keep track of a Body and a radius
   Body body;
   float r;
+  PImage img=loadImage("monster.png");;
+  
+  
 
   color col;
 
@@ -56,9 +59,13 @@ class Particle {
     fill(col);
     stroke(0);
     strokeWeight(1);
-    ellipse(0, 0, r*2, r*2);
+ //   ellipse(0, 0, r*2, r*2);
+    
     // Let's add a line so we can see the rotation
-    line(0, 0, r, 0);
+  //  line(0, 0, r, 0);
+  int R=int(r);
+  img.resize(2*R,2*R);
+  image(img,-R,-R);
     popMatrix();
   }
 

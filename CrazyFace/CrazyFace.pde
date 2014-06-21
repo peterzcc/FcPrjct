@@ -24,7 +24,7 @@ PShape rightBro;
 float step=0;
 
 void setup() {
-  size(640, 480, P2D);
+  size(1024, 768, P2D);
   frameRate(60);
   oscP5 = new OscP5(this, 8338);
   
@@ -42,8 +42,8 @@ void draw() {
   
   // Simulating particles
   if (random(1) < 0.1) {
-    float sz = random(4,8);
-    particles.add(new Particle(random(250,300),-20,sz));
+    float sz = random(20,40);
+    particles.add(new Particle(random(600,700),-20,sz));
   }
   box2d.step();
   for (int i = particles.size()-1; i >= 0; i--) {
@@ -53,8 +53,9 @@ void draw() {
       particles.remove(i);
     }
   }
-  face.track();
-  
+  face.track1();
+  face.track2();
+ // scale(2);
   if (face.found > 0) {
     noFill();
     face.eyeRightLocalUpdate();
@@ -64,7 +65,10 @@ void draw() {
     for(PVector rightEyeVertex :face.geyeR){
       rightEye.vertex(rightEyeVertex.x,rightEyeVertex.y);
     }
+    
     rightEye.endShape(CLOSE);
+  //  rightEye.scale(3);
+  //shape(rightEye);
     shape(rightEye);
     
     face.eyeLeftLocalUpdate();
@@ -107,6 +111,7 @@ void draw() {
       mouth.vertex(mouthVertex.x,mouthVertex.y);
     }
     mouth.endShape(CLOSE);
+    //mouth.scale(3);
     shape(mouth);
     
     face.display();
@@ -120,4 +125,3 @@ void draw() {
 void oscEvent(OscMessage m) {
   face.parseOSC(m);
 }
-
