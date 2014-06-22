@@ -102,12 +102,12 @@ class Particle {
     
     if ( len < 800){
       Vec2 noise = new Vec2(random(-0.5,0.5),random(-6,6));
-      if (len<100){
-        body.applyForceToCenter((diff.mul(100.0).add(noise)).sub(body.getLinearVelocity()));
-      }
-      else{
-        body.setLinearVelocity(diff.mul(400.0/len).add(noise));
-      }
+//      if (len<100){
+//        body.applyForceToCenter((diff.mul(100.0).add(noise)).sub(body.getLinearVelocity()));
+//      }
+//      else{
+//        body.setLinearVelocity(diff.mul(400.0/len).add(noise));
+//      }
     }
     body.applyTorque(-500.0*(body.getAngle()+random(-1,1)));
   }
