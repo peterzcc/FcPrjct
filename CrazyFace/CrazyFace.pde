@@ -17,7 +17,10 @@ Box2DProcessing box2d;
 // our FaceOSC tracked face dat
 Face face;
 ArrayList<Particle> particles;
+
 int score=0;
+int HP = 10;
+
 PShape mouth;
 PShape leftEye; 
 PShape rightEye;
@@ -49,6 +52,8 @@ void draw() {
   fill(0,0,255);
   textSize(30 );
   text("Score: "+score,30,50);
+  fill(255,0,0);
+  text("HP: "+ HP,width-200,50);
   // Simulating particles
   if (random(1) < 1/100.0) {
     Particle p = new Particle(random(0+20, width-20), -20, 30);
