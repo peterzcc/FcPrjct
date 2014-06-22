@@ -25,6 +25,8 @@ PShape leftBro;
 PShape rightBro;
 float step=0;
 
+PImage[] monsterImages;
+
 void setup() {
   size(1024, 768, P2D);
   frameRate(60);
@@ -36,6 +38,7 @@ void setup() {
   //To be deleted
   particles = new ArrayList<Particle>();
   face = new Face();
+  
 
 }
 

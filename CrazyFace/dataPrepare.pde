@@ -1,4 +1,12 @@
-
+PImage[]  readImages(String prefix, int num,int scaleX,int scaleY){
+    PImage[] images = new PImage[num];
+    for (int i=0; i<num;++i){
+      String name = prefix+nf(i,4)+".png";
+      images[i]= loadImage(name);
+      images[i].resize(scaleX,scaleY);
+  }
+  return images;
+}
 
 float browCenterY=-1.4604;
 
