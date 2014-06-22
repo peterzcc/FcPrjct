@@ -51,14 +51,14 @@ class Particle {
     // Get its angle of rotation
     float a = body.getAngle();
     pushMatrix();
-//    translate(pos.x, pos.y);
+    translate(pos.x, pos.y);
     rotate(-a);
     noFill();
     stroke(0);
     strokeWeight(1);
     
-    animation.display(pos.x, pos.y,0.2);
-    ellipse(pos.x, pos.y, r*2, r*2);
+    animation.display(0, 0,0.2);
+    ellipse(0, 0, r*2, r*2);
     
     popMatrix();
   }
@@ -94,22 +94,21 @@ class Particle {
 
   void move(Vec2 target){
     if (random(1)<0.05){
-    Vec2 noise = new Vec2(random(-0.5,0.5),random(-3,3));
-//    body.applyLinearImpulse(noise,body.getWorldCenter(),1);
-//    (noise.add(body.getLinearVelocity()));
+    Vec2 noise = new Vec2(random(-0.5,0.5),random(-4,4));
+    body.setLinearVelocity(noise.add(body.getLinearVelocity()));
     }
     Vec2 diff = target.sub(body.getWorldCenter());
     float len=diff.lengthSquared();
     
     if ( len < 800){
       Vec2 noise = new Vec2(random(-0.5,0.5),random(-6,6));
-//      if (len<100){
-//        body.applyForceToCenter((diff.mul(100.0).add(noise)).sub(body.getLinearVelocity()));
-//      }
-//      else{
-//        body.setLinearVelocity(diff.mul(400.0/len).add(noise));
-//      }
+      if (len<100){
+        body.applyForceToCenter((diff.mul(100.0).add(noise)).sub(body.getLinearVelocity()));
+      }
+      else{
+        body.setLinearVelocity(diff.mul(400.0/len).add(noise));
+      }
     }
-//    body.applyTorque(-500.0*(body.getAngle()+random(-1,1)));
+    body.applyTorque(-500.0*(body.getAngle()+random(-1,1)));
   }
 }
