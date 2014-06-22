@@ -38,7 +38,7 @@ class Particle {
     // Let's find the screen position of the particle
     Vec2 pos = box2d.getBodyPixelCoord(body);
     // Is it off the bottom of the screen?
-    if (pos.y > height+r*2 || pos.x<-50 || pos.x>width+50) {
+    if (pos.y > height+r*2 || pos.x<-50 || pos.x>width+50 || eaten) {
       killBody();
       return true;
     }
@@ -113,8 +113,6 @@ class Particle {
     body.applyTorque(-500.0*(body.getAngle()+random(-1,1)));
   }
   
-  void eatCheck(float x,float y){
-    
-  }
+
   
 }

@@ -123,6 +123,7 @@ void draw() {
       Particle p = particles.get(i);
       p.move(face.eyeLeftPos);
       p.display();
+      face.eatCheck(p );
       if (p.done()) {
         particles.remove(i);
       }

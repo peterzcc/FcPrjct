@@ -281,7 +281,10 @@ void track2(){
   beyeBL.setAngularVelocity(omega*20);
 }
 
-
+ void eatCheck(Particle p){
+    Vec2 pos = box2d.getBodyPixelCoord(p.body);
+    p.eaten = inPolyCheck(pos.x,pos.y,gmouth);
+  }
 
 
   // parse an OSC message from FaceOSC

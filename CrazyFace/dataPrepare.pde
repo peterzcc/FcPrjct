@@ -30,7 +30,23 @@ Vec2[] PVectorToVec2(PVector[] points){
 //_________________________________________________________________________
 
 
-  int inPolyCheck(float x, float y,PVector[] z) {
+//  int inPolyCheck(float x, float y,PVector[] z) {
+//    float a = 0;
+//    PVector v = new PVector(x, y);
+//    for (int i =0; i<z.length-1; i++) {
+//      PVector v1 = z[i].get();
+//      PVector v2 = z[i+1].get();
+//      a += vAtan2cent180(v, v1, v2);
+//    }
+//    PVector v1 = z[z.length-1].get();
+//    PVector v2 = z[0].get();
+//    a += vAtan2cent180(v, v1, v2);
+//
+//    if (abs(abs(a) - TWO_PI) < 0.01) return 1;
+//    else return 0;
+//  }
+  
+Boolean inPolyCheck(float x, float y,PVector[] z) {
     float a = 0;
     PVector v = new PVector(x, y);
     for (int i =0; i<z.length-1; i++) {
@@ -42,9 +58,11 @@ Vec2[] PVectorToVec2(PVector[] points){
     PVector v2 = z[0].get();
     a += vAtan2cent180(v, v1, v2);
 
-    if (abs(abs(a) - TWO_PI) < 0.01) return 1;
-    else return 0;
+    if (abs(abs(a) - TWO_PI) < 0.01) return true;
+    else return false;
   }
+  
+  
 float vAtan2cent180(PVector cent, PVector v2, PVector v1) {
     PVector vA = v1.get();
     PVector vB = v2.get();
