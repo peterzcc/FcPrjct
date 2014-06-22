@@ -86,7 +86,7 @@ class Face {
     mouth[1].y=mouth[3].y=-3*tY/4;
     mouth[7].y=mouth[5].y=3*tY/4;
     mouth[0].y=mouth[4].y=mouth[2].x=mouth[6].x=0;
-    println(mouthHeight );
+//    println(mouthHeight );
     for (int i =0; i<mouth.length; ++i) {
       mouth[i].mult(sqrt(mouthHeight*6));
       mouth[i].y+=mouthY;

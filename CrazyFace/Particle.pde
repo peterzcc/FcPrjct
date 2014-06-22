@@ -40,6 +40,7 @@ class Particle {
     Vec2 pos = box2d.getBodyPixelCoord(body);
     // Is it off the bottom of the screen?
     if (pos.y > height+r*2 || pos.x<-50 || pos.x>width+50 || eaten) {
+      if (eaten) ++score;
       killBody();
       return true;
     }

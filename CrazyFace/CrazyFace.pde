@@ -17,7 +17,7 @@ Box2DProcessing box2d;
 // our FaceOSC tracked face dat
 Face face;
 ArrayList<Particle> particles;
-
+int score=0;
 PShape mouth;
 PShape leftEye; 
 PShape rightEye;
@@ -29,12 +29,14 @@ PImage[] monsterImages;
 
 void setup() {
   size(1024, 768, P2D);
-  frameRate(60);
+  frameRate(30);
   oscP5 = new OscP5(this, 8338);
 
   // Initialize box2d
   box2d = new Box2DProcessing(this);
+  
   box2d.createWorld();
+//  box2d.step(1/30.0,8,3);
   //To be deleted
   particles = new ArrayList<Particle>();
   face = new Face();
@@ -44,7 +46,9 @@ void setup() {
 void draw() {  
   background(200);
   stroke(0);
-
+  fill(0,0,255);
+  textSize(30 );
+  text("Score: "+score,30,50);
   // Simulating particles
   if (random(1) < 1/100.0) {
     Particle p = new Particle(random(0+20, width-20), -20, 30);
