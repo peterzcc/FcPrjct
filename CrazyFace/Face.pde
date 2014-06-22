@@ -202,7 +202,7 @@ class Face {
   void makeBodyR() {
 
     BodyDef beyeBRdef = new BodyDef();
-    beyeBRdef.position = box2d.coordPixelsToWorld(width/2, height/2);
+    beyeBRdef.position = box2d.coordPixelsToWorld(width, height);
     beyeBRdef.type = BodyType.KINEMATIC;
     beyeBRdef.bullet=true;
     beyeBR = box2d.world.createBody(beyeBRdef);
@@ -232,7 +232,7 @@ class Face {
   void makeBodyL() {
 
     BodyDef beyeBLdef = new BodyDef();
-    beyeBLdef.position = box2d.coordPixelsToWorld(width/2, height/2);
+    beyeBLdef.position = box2d.coordPixelsToWorld(width, height);
     beyeBLdef.type = BodyType.KINEMATIC;
     beyeBLdef.bullet=true;
     beyeBL = box2d.world.createBody(beyeBLdef);
