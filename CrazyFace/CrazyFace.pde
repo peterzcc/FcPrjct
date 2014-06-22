@@ -10,6 +10,8 @@ import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.*;
 import org.jbox2d.dynamics.*;
 import org.jbox2d.dynamics.contacts.*;
+
+
 Box2DProcessing box2d;
 
 // our FaceOSC tracked face dat
@@ -34,6 +36,7 @@ void setup() {
   //To be deleted
   particles = new ArrayList<Particle>();
   face = new Face();
+
 }
 
 void draw() {  
@@ -41,13 +44,16 @@ void draw() {
   stroke(0);
   
   // Simulating particles
-  if (random(1) < 0.1) {
+  if (random(1) < 1/100.0) {
     float sz = random(20,40);
-    particles.add(new Particle(random(600,700),-20,sz));
+    Particle p = new Particle(random(0+20,width-20),-20,sz);
+
+    particles.add(p);
   }
   box2d.step();
   for (int i = particles.size()-1; i >= 0; i--) {
     Particle p = particles.get(i);
+    p.move(face.eyeLeftPos);
     p.display();
     if (p.done()) {
       particles.remove(i);
@@ -116,7 +122,7 @@ void draw() {
     
     face.display();
 //    print(face.frame.x+"\t"+face.frame.y+"\t"+face.frame.z+"\n");
-//     print(face.toString());
+     print(face.toString());
   }
 }
 

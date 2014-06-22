@@ -45,12 +45,14 @@ class Face {
   PVector[] geyeR =new PVector[6];
   PVector[] geyeBR= new PVector[5];
   PVector[] geyeBL= new PVector[5];  
-
+  
   PVector geyeBRCenter = new PVector();
   PVector geyeBLCenter = new PVector();
   Body beyeBR;
   Body beyeBL;
-
+  
+  Vec2 eyeLeftPos = new Vec2();
+  
   Face() {
     for(int i=0;i<mouth.length;++i){
       mouth[i] = new PVector();
@@ -153,18 +155,24 @@ class Face {
   
 void mouthGlobalUpdate(){
     transform(mouth,gmouth,frame);
+    
   }
 
 void eyeRightGlobalUpdate(){
   transform(eyeR,geyeR,frame);
+  
 }
 
 void eyeLeftGlobalUpdate(){
   transform(eyeL,geyeL,frame);
+  PVector coor = PVector.add(geyeL[0],geyeL[3]);
+  coor.div(2 );
+  eyeLeftPos = box2d.coordPixelsToWorld(coor.x,coor.y);
 }
 
 void eyeBroLeftGlobalUpdate(){
   transform(eyeBL,geyeBL,frame);
+  
 }
 void eyeBroRightGlobalUpdate(){
   transform(eyeBR,geyeBR,frame);

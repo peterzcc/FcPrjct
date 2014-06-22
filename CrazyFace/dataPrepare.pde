@@ -48,4 +48,3 @@ float vAtan2cent180(PVector cent, PVector v2, PVector v1) {
     ang-=PI;
     return ang;
   }
-
