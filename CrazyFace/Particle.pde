@@ -13,7 +13,8 @@ class Particle {
   Animation animation;
   Boolean isFirst=true;
   color col;
-  Boolean eaten;
+  Boolean eaten=false;
+  Boolean inMouse=false;
   
   Particle(float x, float y, float r_) {
     r = r_;

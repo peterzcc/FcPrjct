@@ -107,26 +107,24 @@ void draw() {
 
     face.mouthLocalUpdate();
     face.mouthGlobalUpdate();
-    fill(255,0,0);
+    fill(255, 0, 0);
     mouth=createShape();
     mouth.beginShape();
-    
+
     for (PVector mouthVertex : face.gmouth) {
       mouth.vertex(mouthVertex.x, mouthVertex.y);
     }
     mouth.endShape(CLOSE);
-    //mouth.scale(3);
     shape(mouth);
-
-    face.display();
-    for (int i = particles.size ()-1; i >= 0; i--) {
-      Particle p = particles.get(i);
-      p.move(face.eyeLeftPos);
-      p.display();
-      face.eatCheck(p );
-      if (p.done()) {
-        particles.remove(i);
-      }
+  }
+  for (int i = particles.size ()-1; i >= 0; i--) {
+    Particle p = particles.get(i);
+    p.move(face.eyeLeftPos);
+    p.display();
+    face.eatCheck(p );
+    face.inMouthCheck(p );
+    if (p.done()) {
+      particles.remove(i);
     }
     //     print(face.toString());
   }
