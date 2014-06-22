@@ -18,7 +18,7 @@ class Animation
     numFrames=num;
     images = new PImage[numFrames];
     for (int i=0;i<numFrames;++i){
-      images[i]=input[i].co;
+      images[i]=input[i];
     }
   }
   void display(float x,float y,float freq){

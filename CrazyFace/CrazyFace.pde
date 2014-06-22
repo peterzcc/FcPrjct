@@ -38,7 +38,7 @@ void setup() {
   //To be deleted
   particles = new ArrayList<Particle>();
   face = new Face();
-  
+  monsterImages = readImages("heihei",12,30,0);
 
 }
 
@@ -48,9 +48,8 @@ void draw() {
   
   // Simulating particles
   if (random(1) < 1/100.0) {
-    float sz = random(20,40);
-    Particle p = new Particle(random(0+20,width-20),-20,sz);
-
+    Particle p = new Particle(random(0+20,width-20),-20,30);
+    p.animation=new Animation(monsterImages,12);
     particles.add(p);
   }
   box2d.step();

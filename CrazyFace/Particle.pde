@@ -19,8 +19,6 @@ class Particle {
     // This function puts the particle in the Box2d world
     makeBody(x, y, r);
     body.setUserData(this);
-    int R = int(r);
-    animation = new Animation("heihei",12,2*R,2*R);
     col = color(175);
 //    loopingGif = new Gif(this, "heihei.gif");
 //    loopingGif.loop();
@@ -62,16 +60,8 @@ class Particle {
     strokeWeight(1);
     
     animation.display(pos.x, pos.y,0.2);
- //   ellipse(0, 0, r*2, r*2);
+    ellipse(pos.x, pos.y, r*2, r*2);
     
-    // Let's add a line so we can see the rotation
-  //  line(0, 0, r, 0);
-    int R=int(r);
-  // img.resize(2*R,2*R);
-  // image(img,-R,-R);
-  
-  
-  
     popMatrix();
   }
 
@@ -107,7 +97,8 @@ class Particle {
   void move(Vec2 target){
     if (random(1)<0.05){
     Vec2 noise = new Vec2(random(-0.5,0.5),random(-3,3));
-    body.setLinearVelocity(noise.add(body.getLinearVelocity()));
+    body.applyLinearImpulse(noise,body.getWorldCenter(),true);
+//    (noise.add(body.getLinearVelocity()));
     }
     Vec2 diff = target.sub(body.getWorldCenter());
     float len=diff.lengthSquared();
