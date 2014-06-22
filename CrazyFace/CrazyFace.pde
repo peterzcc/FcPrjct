@@ -29,7 +29,7 @@ PShape rightBro;
 float step=0;
 
 PImage[] monsterImages;
-
+PImage red;
 void setup() {
   size(1024, 768, P2D);
   frameRate(30);
@@ -41,12 +41,18 @@ void setup() {
   box2d.createWorld();
 //  box2d.step(1/30.0,8,3);
   //To be deleted
+  box2d.listenForCollisions();
   particles = new ArrayList<Particle>();
   face = new Face();
   monsterImages = readImages("heihei", 12, 30, 0);
+  red = loadImage("red.png");
+  red.resize(30,0);
 }
 
 void draw() {  
+  
+//  println(frameRate );
+  
   if (HP<=0) noLoop();
   background(200);
   stroke(0);
@@ -56,10 +62,19 @@ void draw() {
   fill(255,0,0);
   text("HP: "+ HP,width-200,50);
   // Simulating particles
-  if (random(1) < 1/100.0) {
+  if (random(1) < 1/10.0) {
     Particle p = new Particle(random(0+20, width-20), -20, 30);
     p.animation=new Animation(monsterImages, 12);
     particles.add(p);
+    p.body.setLinearVelocity(new Vec2(random(-5f,5f),random(-5f,-10f)));
+    p.body.setAngularVelocity(random(-1, 1));
+  }
+  if (random(1) < 1/100.0) {
+    Particle p = new Particle(-20, random(0+20, height-20), 30);
+    p.animation=new Animation(monsterImages, 12);
+    particles.add(p);
+    p.body.setLinearVelocity(new Vec2(random(5,10),random(-5,5)));
+    p.body.setAngularVelocity(random(-1, 1));
   }
   box2d.step();
 
@@ -145,4 +160,47 @@ void draw() {
 
 void oscEvent(OscMessage m) {
   face.parseOSC(m);
+}
+
+void beginContact(Contact cp){
+  // Get both shapes
+  Fixture f1 = cp.getFixtureA();
+  Fixture f2 = cp.getFixtureB();
+  // Get both bodies
+  Body b1 = f1.getBody();
+  Body b2 = f2.getBody();
+
+  // Get our objects that reference these bodies
+  Object o1 = b1.getUserData();
+  Object o2 = b2.getUserData();
+  if( o2.getClass() == Face.class){
+    Particle p1=(Particle) o1;
+//    p1.killBody();
+  //  Particle p2=(Face) o2;
+   // p2.killBody();
+   p1.hitted=true;
+  } else if (o1.getClass() == Face.class){
+        Particle p2=(Particle) o2;
+//    p1.killBody();
+  //  Particle p2=(Face) o2;
+   // p2.killBody();
+   p2.hitted=true;
+  }
+  else{
+    Particle p1=(Particle) o1;
+    Particle p2=(Particle) o2;
+    if (p1.hitted==true) {
+      p1.destroyed=true;
+      p2.hitted=true;
+    }else
+    if (p2.hitted==true) {
+      p2.destroyed = true;
+      p1.hitted=true;
+    }
+  }
+  
+}
+
+// Objects stop touching each other
+void endContact(Contact cp) {
 }

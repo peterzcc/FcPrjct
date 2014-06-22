@@ -226,6 +226,7 @@ class Face {
     fd.shape = sd;
     fd.density = 10.0;
     beyeBR.createFixture(fd);
+    beyeBR.setUserData(this);
   }
 
   void makeBodyL() {
@@ -255,6 +256,7 @@ class Face {
     fd.shape = sd;
     fd.density = 10.0;
     beyeBL.createFixture(fd);
+    beyeBL.setUserData(this);
   }
 
 

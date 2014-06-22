@@ -16,6 +16,8 @@ class Particle {
   Boolean eaten=false;
   Boolean inMouse=false;
   Boolean inEyes = false;
+  Boolean hitted=false;
+  Boolean destroyed = false;
   
   Particle(float x, float y, float r_) {
     r = r_;
@@ -40,7 +42,7 @@ class Particle {
     // Let's find the screen position of the particle
     Vec2 pos = box2d.getBodyPixelCoord(body);
     // Is it off the bottom of the screen?
-    if (pos.y > height+r*2 || pos.x<-50 || pos.x>width+50 || eaten || inEyes) {
+    if (pos.y > height+r*2 || pos.x<-50 || pos.x>width+50 || eaten || inEyes||destroyed) {
       if (eaten) ++score;
       killBody();
       return true;
@@ -60,8 +62,14 @@ class Particle {
     noFill();
     stroke(0);
     strokeWeight(1);
-    
+    if (hitted)
+    {
+      
+      image(red,-r,-r);
+    }
+    else{
     animation.display(-r, -r,0.2);
+    }
    // ellipse(0, 0, r*2, r*2);
     
     popMatrix();
@@ -95,8 +103,7 @@ class Particle {
     body.createFixture(fd);
 
     // Give it a random initial velocity (and angular velocity)
-    body.setLinearVelocity(new Vec2(random(-5f,5f),random(-5f,-10f)));
-    body.setAngularVelocity(random(-1, 1));
+
   }
 
   void move(Vec2 target){
@@ -121,4 +128,4 @@ class Particle {
   
 
   
-}
+};
