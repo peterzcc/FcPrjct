@@ -58,8 +58,8 @@ class Particle {
     stroke(0);
     strokeWeight(1);
     
-    animation.display(0, 0,0.2);
-    ellipse(0, 0, r*2, r*2);
+    animation.display(-r, -r,0.2);
+   // ellipse(0, 0, r*2, r*2);
     
     popMatrix();
   }
@@ -76,8 +76,11 @@ class Particle {
     body = box2d.world.createBody(bd);
 
     // Make the body's shape a circle
-    CircleShape cs = new CircleShape();
-    cs.m_radius = box2d.scalarPixelsToWorld(r);
+    PolygonShape cs = new PolygonShape();
+    //  cs.m_radius = box2d.scalarPixelsToWorld(r);
+    float box2dw=box2d.scalarPixelsToWorld(r);
+    float box2dh=box2d.scalarPixelsToWorld(0.6*r);
+    cs.setAsBox(box2dw,box2dh);
 
     FixtureDef fd = new FixtureDef();
     fd.shape = cs;
