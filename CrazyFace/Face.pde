@@ -85,7 +85,9 @@ class Face {
     mouth[1].y=mouth[3].y=-3*tY/4;
     mouth[7].y=mouth[5].y=3*tY/4;
     mouth[0].y=mouth[4].y=mouth[2].x=mouth[6].x=0;
+    println(mouthHeight );
     for(int i =0; i<mouth.length;++i){
+      mouth[i].mult(sqrt(mouthHeight*6));
       mouth[i].y+=mouthY;
       mouth[i].mult(4);
     }
@@ -101,7 +103,7 @@ class Face {
     for(int i=0;i<eyeR.length;++i){
       eyeR[i].x+=20;
       eyeR[i].y-=eyeRight*9;
-      eyeR[i].mult(2);
+      eyeR[i].mult(4);
     }
     
   }
@@ -117,7 +119,7 @@ class Face {
     for(int i=0;i<eyeR.length;++i){
       eyeL[i].x-=20;
       eyeL[i].y-=eyeLeft*9;
-      eyeL[i].mult(2);
+      eyeL[i].mult(4);
     }
     
   }
@@ -133,7 +135,7 @@ class Face {
     {
       eyeBL[i].x-=20;
       eyeBL[i].y-=eyebrowLeft*6;
-      eyeBL[i].mult(2);
+      eyeBL[i].mult(4);
     }
   }
   
@@ -149,7 +151,7 @@ class Face {
     {
       eyeBR[i].x+=20;
       eyeBR[i].y-=eyebrowRight*6;
-      eyeBR[i].mult(2);
+      eyeBR[i].mult(4);
     }
   }
   

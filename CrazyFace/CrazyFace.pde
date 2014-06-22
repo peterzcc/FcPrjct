@@ -31,72 +31,64 @@ void setup() {
   size(1024, 768, P2D);
   frameRate(60);
   oscP5 = new OscP5(this, 8338);
-  
+
   // Initialize box2d
   box2d = new Box2DProcessing(this);
   box2d.createWorld();
   //To be deleted
   particles = new ArrayList<Particle>();
   face = new Face();
-  monsterImages = readImages("heihei",12,30,0);
-
+  monsterImages = readImages("heihei", 12, 30, 0);
 }
 
 void draw() {  
   background(200);
   stroke(0);
-  
+
   // Simulating particles
   if (random(1) < 1/100.0) {
-    Particle p = new Particle(random(0+20,width-20),-20,30);
-    p.animation=new Animation(monsterImages,12);
+    Particle p = new Particle(random(0+20, width-20), -20, 30);
+    p.animation=new Animation(monsterImages, 12);
     particles.add(p);
   }
   box2d.step();
-  for (int i = particles.size()-1; i >= 0; i--) {
-    Particle p = particles.get(i);
-    p.move(face.eyeLeftPos);
-    p.display();
-    if (p.done()) {
-      particles.remove(i);
-    }
-  }
-  
-  
+
+
+
   face.track1();
   face.track2();
- // scale(2);
+  // scale(2);
   if (face.found > 0) {
     noFill();
     face.eyeRightLocalUpdate();
     face.eyeRightGlobalUpdate();
     rightEye=createShape();
     rightEye.beginShape();
-    for(PVector rightEyeVertex :face.geyeR){
-      rightEye.vertex(rightEyeVertex.x,rightEyeVertex.y);
+    for (PVector rightEyeVertex : face.geyeR) {
+      rightEye.vertex(rightEyeVertex.x, rightEyeVertex.y);
     }
-    
+
     rightEye.endShape(CLOSE);
-  //  rightEye.scale(3);
-  //shape(rightEye);
+    //  rightEye.scale(3);
+    //shape(rightEye);
     shape(rightEye);
-    
+
     face.eyeLeftLocalUpdate();
     face.eyeLeftGlobalUpdate();
     leftEye=createShape();
     leftEye.beginShape();
-    for(PVector leftEyeVertex :face.geyeL){
-      leftEye.vertex(leftEyeVertex.x,leftEyeVertex.y);
+    for (PVector leftEyeVertex : face.geyeL) {
+      leftEye.vertex(leftEyeVertex.x, leftEyeVertex.y);
     }
     leftEye.endShape(CLOSE);
     shape(leftEye);
-    
+
     face.eyeBroRightLocalUpdate();
     face.eyeBroRightGlobalUpdate();
     rightBro=createShape();
     rightBro.beginShape();
-    for(PVector rightBroVertex : face.geyeBR){
-      rightBro.vertex(rightBroVertex.x,rightBroVertex.y);
+    for (PVector rightBroVertex : face.geyeBR) {
+      rightBro.vertex(rightBroVertex.x, rightBroVertex.y);
     }
     rightBro.endShape(CLOSE);
     shape(rightBro);
@@ -105,28 +97,37 @@ void draw() {
     face.eyeBroLeftGlobalUpdate();
     leftBro=createShape();
     leftBro.beginShape();
-    for(PVector leftBroVertex : face.geyeBL){
-      leftBro.vertex(leftBroVertex.x,leftBroVertex.y);
+    for (PVector leftBroVertex : face.geyeBL) {
+      leftBro.vertex(leftBroVertex.x, leftBroVertex.y);
     }
     leftBro.endShape(CLOSE);
     shape(leftBro);
-    
-    
-    
+
+
+
     face.mouthLocalUpdate();
     face.mouthGlobalUpdate();
+    fill(255,0,0);
     mouth=createShape();
     mouth.beginShape();
-    for(PVector mouthVertex : face.gmouth){
-      mouth.vertex(mouthVertex.x,mouthVertex.y);
+    
+    for (PVector mouthVertex : face.gmouth) {
+      mouth.vertex(mouthVertex.x, mouthVertex.y);
     }
     mouth.endShape(CLOSE);
     //mouth.scale(3);
     shape(mouth);
-    
+
     face.display();
-//    print(face.frame.x+"\t"+face.frame.y+"\t"+face.frame.z+"\n");
-     print(face.toString());
+    for (int i = particles.size ()-1; i >= 0; i--) {
+      Particle p = particles.get(i);
+      p.move(face.eyeLeftPos);
+      p.display();
+      if (p.done()) {
+        particles.remove(i);
+      }
+    }
+    //     print(face.toString());
   }
 }
 

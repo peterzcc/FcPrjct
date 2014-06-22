@@ -13,7 +13,8 @@ class Particle {
   Animation animation;
   Boolean isFirst=true;
   color col;
-
+  Boolean eaten;
+  
   Particle(float x, float y, float r_) {
     r = r_;
     // This function puts the particle in the Box2d world
@@ -111,4 +112,9 @@ class Particle {
     }
     body.applyTorque(-500.0*(body.getAngle()+random(-1,1)));
   }
+  
+  void eatCheck(float x,float y){
+    
+  }
+  
 }
