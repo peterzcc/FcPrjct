@@ -20,8 +20,6 @@ class Particle {
     makeBody(x, y, r);
     body.setUserData(this);
     col = color(175);
-//    loopingGif = new Gif(this, "heihei.gif");
-//    loopingGif.loop();
   }
 
   // This function removes the particle from the box2d world
@@ -39,7 +37,7 @@ class Particle {
     // Let's find the screen position of the particle
     Vec2 pos = box2d.getBodyPixelCoord(body);
     // Is it off the bottom of the screen?
-    if (pos.y > height+r*2) {
+    if (pos.y > height+r*2 || pos.x<-50 || pos.x>width+50) {
       killBody();
       return true;
     }
@@ -55,7 +53,7 @@ class Particle {
     pushMatrix();
 //    translate(pos.x, pos.y);
     rotate(-a);
-    fill(col);
+    noFill();
     stroke(0);
     strokeWeight(1);
     
@@ -97,7 +95,7 @@ class Particle {
   void move(Vec2 target){
     if (random(1)<0.05){
     Vec2 noise = new Vec2(random(-0.5,0.5),random(-3,3));
-    body.applyLinearImpulse(noise,body.getWorldCenter(),true);
+//    body.applyLinearImpulse(noise,body.getWorldCenter(),1);
 //    (noise.add(body.getLinearVelocity()));
     }
     Vec2 diff = target.sub(body.getWorldCenter());
@@ -112,6 +110,6 @@ class Particle {
 //        body.setLinearVelocity(diff.mul(400.0/len).add(noise));
 //      }
     }
-    body.applyTorque(-500.0*(body.getAngle()+random(-1,1)));
+//    body.applyTorque(-500.0*(body.getAngle()+random(-1,1)));
   }
 }
