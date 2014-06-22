@@ -15,6 +15,7 @@ class Particle {
   color col;
   Boolean eaten=false;
   Boolean inMouse=false;
+  Boolean inEyes = false;
   
   Particle(float x, float y, float r_) {
     r = r_;
@@ -39,7 +40,7 @@ class Particle {
     // Let's find the screen position of the particle
     Vec2 pos = box2d.getBodyPixelCoord(body);
     // Is it off the bottom of the screen?
-    if (pos.y > height+r*2 || pos.x<-50 || pos.x>width+50 || eaten) {
+    if (pos.y > height+r*2 || pos.x<-50 || pos.x>width+50 || eaten || inEyes) {
       if (eaten) ++score;
       killBody();
       return true;

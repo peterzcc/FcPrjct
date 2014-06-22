@@ -52,7 +52,7 @@ class Face {
   Body beyeBL;
 
   Vec2 eyeLeftPos = new Vec2();
-
+  
   Face() {
     for (int i=0; i<mouth.length; ++i) {
       mouth[i] = new PVector();
@@ -311,6 +311,15 @@ class Face {
     if (!p.inMouse) {
       Vec2 pos = box2d.getBodyPixelCoord(p.body);
       p.inMouse = inPolyCheck(pos.x, pos.y, gmouth);
+    }
+  }
+
+  void inEyesCheck(Particle p){
+    Vec2 pos = box2d.getBodyPixelCoord(p.body);
+    if (inPolyCheck(pos.x, pos.y, geyeL)||
+    inPolyCheck(pos.x, pos.y, geyeR)){
+      p.inEyes=true;
+      --HP;
     }
   }
 

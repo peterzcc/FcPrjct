@@ -47,6 +47,7 @@ void setup() {
 }
 
 void draw() {  
+  if (HP<=0) noLoop();
   background(200);
   stroke(0);
   fill(0,0,255);
@@ -132,6 +133,7 @@ void draw() {
     p.display();
     face.eatCheck(p );
     face.inMouthCheck(p );
+    face.inEyesCheck(p );
     if (p.done()) {
       particles.remove(i);
     }
