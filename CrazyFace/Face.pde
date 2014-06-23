@@ -162,8 +162,8 @@ class Face {
     for (int i=0; i<eyeBL.length; ++i)
     {
       eyeBL[i].x-=20;
-      eyeBL[i].y =eyeBL[i].y-38-(eyebrowLeft-7.4)*25;
-      println(eyebrowLeft);
+      eyeBL[i].y =eyeBL[i].y-38-(eyebrowLeft-7.4)*12;
+//      println(eyebrowLeft);
       eyeBL[i].mult(4);
     }
   }
@@ -184,7 +184,7 @@ class Face {
     for (int i=0; i<eyeBR.length; ++i)
     {
       eyeBR[i].x+=20;
-      eyeBR[i].y=eyeBR[i].y-38-(eyebrowLeft-7.4)*25;
+      eyeBR[i].y=eyeBR[i].y-38-(eyebrowLeft-7.4)*12;
       eyeBR[i].mult(4);
     }
   }
@@ -327,7 +327,10 @@ class Face {
     image(eyeLIm,-eyeLIm.width/2,-eyeLIm.height/2);
     popMatrix();
 
-    fill(255, 0, 0);
+    fill(255, 101, 41);
+    strokeJoin(ROUND);
+    stroke(185,74,30);
+    strokeWeight(8);
     mouthDraw=createShape();
     mouthDraw.beginShape();
     for (PVector mouthVertex : gmouth) {
@@ -350,6 +353,7 @@ class Face {
     float omega = frame.z-beyeBR.getAngle();
     beyeBR.setAngularVelocity(omega*20);
   }
+  
   void track2() {
     geyeBLCenter = PVector.add(geyeBL[0], geyeBL[4]);
     geyeBLCenter.div(2);
@@ -386,8 +390,7 @@ class Face {
     }
   }
 
-  // parse an OSC message from FaceOSC
-  // returns true if a message was handled
+
   boolean parseOSC(OscMessage m) {
 
     if (m.checkAddrPattern("/found")) {
