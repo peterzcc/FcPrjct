@@ -47,8 +47,8 @@ void setup() {
   weapons = new ArrayList<Weapon>();
 
   monsterImages = readImages("heihei", 12, 30, 0);
-  explosionImages = readExpImages(26,100,0);
-  eyesImages = readEyeImages("eye",14,20,0);
+  explosionImages = readExpImages(26, 100, 0);
+  eyesImages = readEyeImages("eye", 14, 20, 0);
   red = loadImage("red.png");
   red.resize(30, 0);
   face = new Face();
@@ -56,27 +56,27 @@ void setup() {
 
 void draw() {  
 
-//println(frameRate);
+  println(frameRate);
   level = score/10+1;
-  background(255,248,225);
+  background(255, 248, 225);
   stroke(0);
   box2d.step();
 
   // Simulating particles
-  if (random(1) < (1.3)/100.0) {
+  if (random(1) < (2)/100.0) {
     Particle p = new Particle(width+20, random(0+20, height-20), 30);
     particles.add(p);
     p.body.setLinearVelocity(new Vec2(random(-10, -5), random(-5, 5)));
     p.body.setAngularVelocity(random(-1, 1));
   }
-  if (random(1) < (1.3)/100.0) {
+  if (random(1) < (2)/100.0) {
     Particle p = new Particle(-20, random(0+20, height-20), 30);
     p.animation=new Animation(monsterImages, 12);
     particles.add(p);
     p.body.setLinearVelocity(new Vec2(random(5, 10), random(-5, 5)));
     p.body.setAngularVelocity(random(-1, 1));
   }
-  
+
   face.track1();
   face.track2();
   face.update();
@@ -96,38 +96,38 @@ void draw() {
       particles.remove(i);
     }
   }
-  
-  if (face.eyebrowLeft<7.8 && face.mouthWidth>18.3 && random(1)<0.1){
-    Weapon w1 = new Weapon(face.coorL.x-60,face.coorL.y+40,-100.0,0.0);
-    weapons.add(w1);
-    Weapon w2 = new Weapon(face.coorR.x+60,face.coorR.y+40,100.0,0.0);
-    weapons.add(w2);
-  }
-  
-  for (int i=weapons.size()-1;i>=0;--i){
-    Weapon w = weapons.get(i);
-    w.display();
-    if (w.done()){
-      weapons.remove(i);
+
+  if (face.eyebrowLeft<7.8 && face.mouthWidth>18.3 && random(1)<0.1) {
+    for (float alpha = -PI/2+PI/10; alpha<PI/2; alpha+=PI/10 ) {
+      Weapon w1 = new Weapon(face.coorL.x-60, face.coorL.y+40, alpha, -100*cos(alpha), 100*sin(alpha));
+      weapons.add(w1);
+      Weapon w2 = new Weapon(face.coorR.x+60, face.coorR.y+40, alpha, 100*cos(alpha), 100*sin(alpha));
+      weapons.add(w2);
     }
   }
-  
 
-  fill(0, 0, 255);
-  textSize(30 );
-  text("Score: "+score, 30, 50);
-  text("Level "+level, width/2-50, 50);
-  fill(255, 0, 0);
-  text("HP: "+ HP, width-200, 50);
+for (int i=weapons.size ()-1; i>=0; --i) {
+  Weapon w = weapons.get(i);
+  w.display();
+  if (w.done()) {
+    weapons.remove(i);
+  }
+}
 
 
-//  print(face.eyebrowLeft +"\t" +face.eyebrowRight);
-  println(face.mouthWidth);
-  //  if (HP<=0) {
-  //      fill(255, 0, 0);
-  //      rect(0, 0, width, height);
-  //      noLoop();
-  //    }
+fill(0, 0, 255);
+textSize(30 );
+text("Score: "+score, 30, 50);
+text("Level "+level, width/2-50, 50);
+fill(255, 0, 0);
+text("HP: "+ HP, width-200, 50);
+
+
+//  if (HP<=0) {
+//      fill(255, 0, 0);
+//      rect(0, 0, width, height);
+//      noLoop();
+//    }
 }
 
 // OSC CALLBACK FUNCTIONS
@@ -167,11 +167,11 @@ void beginContact(Contact cp) {
       p2.destroyed = true;
       p1.hitted=true;
     }
-  }else if (o1.getClass()==Weapon.class){
+  } else if (o1.getClass()==Weapon.class) {
     Particle p2=(Particle) o2;
     p2.hitted=true;
     p2.destroyed=true;
-  }else if (o2.getClass()==Weapon.class){
+  } else if (o2.getClass()==Weapon.class) {
     Particle p1=(Particle) o1;
     p1.hitted=true;
     p1.destroyed=true;

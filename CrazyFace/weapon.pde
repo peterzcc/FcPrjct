@@ -10,9 +10,9 @@ class Weapon {
   // We need to keep track of a Body and a radius
   Body body;
   
-  Weapon(float x, float y,float vx, float vy) {
+  Weapon(float x, float y,float alpha, float vx, float vy) {
     // This function puts the particle in the Box2d world
-    makeBody(x, y);
+    makeBody(x, y,alpha);
     body.setLinearVelocity(new Vec2 (vx,vy));
     body.setUserData(this);
   }
@@ -53,11 +53,12 @@ class Weapon {
   }
 
   // Here's our function that adds the particle to the Box2D world
-  void makeBody(float x, float y) {
+  void makeBody(float x, float y,float alpha) {
     BodyDef bd = new BodyDef();
     bd.position = box2d.coordPixelsToWorld(x, y);
     bd.type = BodyType.KINEMATIC;
     bd.gravityScale=0.0;
+    bd.angle=alpha;
     body = box2d.world.createBody(bd);
 
     

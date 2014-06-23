@@ -21,6 +21,10 @@ class Particle {
   Boolean destroyed = false;
   Boolean exploded = false;
   Boolean track=false;
+  
+  float box2dw=15;
+  float box2dh=18;
+  
   Particle(float x, float y, float r_) {
     r = r_;
     // This function puts the particle in the Box2d world
@@ -70,17 +74,20 @@ class Particle {
     noFill();
     stroke(0);
     strokeWeight(1);
+    
+    float w = box2d.scalarWorldToPixels(box2dw*2);
+    float h = box2d.scalarWorldToPixels(box2dh*2);
+    
     if (hitted)
     {
       if (destroyed){
-        exploded=explosion.display(-r,-r);
+        exploded=explosion.display(-40,-40);
       }
-      else image(red, -r, -r);
+      else image(red, -w/2,-h/2-5);
     } 
     else {
-      animation.display(-r, -r, 0.2);
+      animation.display(-w/2,-h/2-5, 0.2);
     }
-    // ellipse(0, 0, r*2, r*2);
 
     popMatrix();
   }
@@ -98,9 +105,8 @@ class Particle {
 
     // Make the body's shape a circle
     PolygonShape cs = new PolygonShape();
-    //  cs.m_radius = box2d.scalarPixelsToWorld(r);
-    float box2dw=box2d.scalarPixelsToWorld(r);
-    float box2dh=box2d.scalarPixelsToWorld(0.6*r);
+    box2dw=box2d.scalarPixelsToWorld(0.5*r);
+    box2dh=box2d.scalarPixelsToWorld(0.6*r);
     cs.setAsBox(box2dw, box2dh);
 
     FixtureDef fd = new FixtureDef();
@@ -122,7 +128,8 @@ class Particle {
     }
     Vec2 diff = target.sub(body.getWorldCenter());
     float len=diff.lengthSquared();
-    body.applyTorque(-500.0*(body.getAngle()+random(-1, 1)));
+    if (body.getAngle()<PI/2 && body.getAngle()>-PI/2 )
+      body.applyTorque(-500.0*(body.getAngle()+random(-1, 1)));
     if (diff.y<-1) return;
     if (track && len < 800) {
       Vec2 noise = new Vec2(random(-0.5, 0.5), random(-6, 6));
