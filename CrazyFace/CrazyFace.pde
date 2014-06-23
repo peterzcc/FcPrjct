@@ -62,7 +62,7 @@ void setup() {
 
 void draw() {  
 
-  println(frameRate);
+//  println(frameRate);
   level = score/10+1;
   background(255, 248, 225);
   stroke(0);
@@ -102,6 +102,9 @@ void draw() {
   if (face.found>0) {
     face.display();
   }
+  
+
+  
   for (int i = particles.size ()-1; i >= 0; i--) {
     Particle p = particles.get(i);
     p.display();
@@ -125,6 +128,7 @@ void draw() {
     }
   }
 
+
   for (int i=weapons.size ()-1; i>=0; --i) {
     Weapon w = weapons.get(i);
     w.display();
@@ -141,7 +145,6 @@ void draw() {
   fill(255, 0, 0);
   text("HP: "+ HP, width-200, 50);
 
-  println(face.eyeLeft);
   //  if (HP<=0) {
   //      fill(255, 0, 0);
   //      rect(0, 0, width, height);

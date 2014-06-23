@@ -33,7 +33,7 @@ class Face {
   float eyeWidth =4*eyeHeight;
   float eyebroHeight=3;
   float eyebroWidth=10;
-  
+
   //Local positions
   PVector[] eyeL =new PVector[6];
   PVector[] eyeR =new PVector[6];
@@ -46,8 +46,8 @@ class Face {
   PVector[] geyeR =new PVector[6];
   PVector[] geyeBR= new PVector[5];
   PVector[] geyeBL= new PVector[5];  
-  
-  PVector coorL,coorR;
+
+  PVector coorL, coorR;
   PVector geyeBRCenter = new PVector();
   PVector geyeBLCenter = new PVector();
   Body beyeBR;
@@ -55,9 +55,10 @@ class Face {
 
   Animation eyeLAni;
   Animation eyeRAni;
-  
+  PImage eyeLIm, eyeRIm;
+
   Vec2 eyeLeftPos = new Vec2();
-  
+
   Face() {
     for (int i=0; i<mouth.length; ++i) {
       mouth[i] = new PVector();
@@ -77,8 +78,12 @@ class Face {
     }
     makeBodyR();
     makeBodyL();
-    eyeLAni = new Animation(eyesImages,14);
-    eyeRAni = new Animation(eyesImages,14);
+    eyeLAni = new Animation(eyesImages, 14);
+    eyeRAni = new Animation(eyesImages, 14);
+    eyeLIm = loadImage("eye.png");
+    eyeLIm.resize(80, 0);
+    eyeRIm = loadImage("eye.png");
+    eyeRIm.resize(80, 0);
   }
 
   void mouthLocalUpdate() {
@@ -93,7 +98,7 @@ class Face {
     mouth[1].y=mouth[3].y=-3*tY/4;
     mouth[7].y=mouth[5].y=3*tY/4;
     mouth[0].y=mouth[4].y=mouth[2].x=mouth[6].x=0;
-//    println(mouthHeight );
+    //    println(mouthHeight );
     for (int i =0; i<mouth.length; ++i) {
       mouth[i].mult(sqrt(mouthHeight*6));
       mouth[i].y+=mouthY;
@@ -116,7 +121,7 @@ class Face {
 
     for (int i=0; i<eyeR.length; ++i) {
       eyeR[i].x+=20;
-      eyeR[i].y-=eyeY*9;
+      eyeR[i].y-=eyeRight*9;
       eyeR[i].mult(4);
     }
   }
@@ -137,7 +142,7 @@ class Face {
 
     for (int i=0; i<eyeR.length; ++i) {
       eyeL[i].x-=20;
-      eyeL[i].y-=eyeY*9;
+      eyeL[i].y-=eyeLeft*9;
       eyeL[i].mult(4);
     }
   }
@@ -157,7 +162,8 @@ class Face {
     for (int i=0; i<eyeBL.length; ++i)
     {
       eyeBL[i].x-=20;
-      eyeBL[i].y-=eyebrowLeft*6;
+      eyeBL[i].y =eyeBL[i].y-38-(eyebrowLeft-7.4)*25;
+      println(eyebrowLeft);
       eyeBL[i].mult(4);
     }
   }
@@ -178,7 +184,7 @@ class Face {
     for (int i=0; i<eyeBR.length; ++i)
     {
       eyeBR[i].x+=20;
-      eyeBR[i].y-=eyebrowRight*6;
+      eyeBR[i].y=eyeBR[i].y-38-(eyebrowLeft-7.4)*25;
       eyeBR[i].mult(4);
     }
   }
@@ -206,18 +212,18 @@ class Face {
   void eyeBroRightGlobalUpdate() {
     transform(eyeBR, geyeBR, frame);
   }
-void update(){
-  eyeRightLocalUpdate();
-  eyeRightGlobalUpdate();
-  eyeLeftLocalUpdate();
-  eyeLeftGlobalUpdate();
-  eyeBroRightLocalUpdate();
-  eyeBroRightGlobalUpdate();
-  eyeBroLeftLocalUpdate();
-  eyeBroLeftGlobalUpdate();
-  mouthLocalUpdate();
-  mouthGlobalUpdate();
-}
+  void update() {
+    eyeRightLocalUpdate();
+    eyeRightGlobalUpdate();
+    eyeLeftLocalUpdate();
+    eyeLeftGlobalUpdate();
+    eyeBroRightLocalUpdate();
+    eyeBroRightGlobalUpdate();
+    eyeBroLeftLocalUpdate();
+    eyeBroLeftGlobalUpdate();
+    mouthLocalUpdate();
+    mouthGlobalUpdate();
+  }
 
   void makeBodyR() {
 
@@ -281,57 +287,56 @@ void update(){
 
 
   void display() {
-  
-  Vec2 posBR = box2d.getBodyPixelCoord(beyeBR);
-  noFill();
-  float a = beyeBR.getAngle();
-  pushMatrix();
-  translate(posBR.x, posBR.y-5);
-  rotate(-a);
- // fill(color(255, 0, 0));
-  stroke(0);
-  strokeWeight(1);
-  rectMode(CENTER);
-  rect(0,0,7*eyebroWidth,4*eyebroHeight);
+
+    Vec2 posBR = box2d.getBodyPixelCoord(beyeBR);
+    noFill();
+    float a = beyeBR.getAngle();
+    pushMatrix();
+    translate(posBR.x, posBR.y-5);
+    rotate(-a);
+    // fill(color(255, 0, 0));
+    stroke(0);
+    strokeWeight(1);
+    rectMode(CENTER);
+    rect(0, 0, 7*eyebroWidth, 4*eyebroHeight);
 
 
-  popMatrix();
-  Vec2 posBL=box2d.getBodyPixelCoord(beyeBL);
-  noFill();
-  pushMatrix();
-  translate(posBL.x,posBL.y-5);
-  rotate(-a);
-  stroke(0);
-  strokeWeight(1);
-  rectMode(CENTER);
-  rect(0,0,7*eyebroWidth,4*eyebroHeight);
-  popMatrix();
+    popMatrix();
+    Vec2 posBL=box2d.getBodyPixelCoord(beyeBL);
+    noFill();
+    pushMatrix();
+    translate(posBL.x, posBL.y-5);
+    rotate(-a);
+    stroke(0);
+    strokeWeight(1);
+    rectMode(CENTER);
+    rect(0, 0, 7*eyebroWidth, 4*eyebroHeight);
+    popMatrix();
 
-  pushMatrix();
-  translate(coorR.x,coorR.y);
-  rotate(-frame.z);
-  ellipse(0,0,eyeWidth*3,eyeHeight*3);
-  eyeRAni.display(0-10,0-10,0.2);
-  popMatrix();
+    pushMatrix();
+    translate(coorR.x, coorR.y);
+    rotate(-frame.z);
+    ellipse(0, 0, eyeWidth*3, eyeHeight*3);
+    image(eyeRIm,-eyeRIm.width/2,-eyeRIm.height/2);
+    popMatrix();
 
-  pushMatrix();
-  translate(coorL.x,coorL.y);
-  rotate(-frame.z);
-  ellipse(0,0,eyeWidth*3,eyeHeight*3);
-  eyeLAni.display(0-10,0-10,0.2);
-  popMatrix();
+    pushMatrix();
+    translate(coorL.x, coorL.y);
+    rotate(-frame.z);
+    ellipse(0, 0, eyeWidth*3, eyeHeight*3);
+    image(eyeLIm,-eyeLIm.width/2,-eyeLIm.height/2);
+    popMatrix();
 
-  fill(255, 0, 0);
-  mouthDraw=createShape();
-  mouthDraw.beginShape();
-  for (PVector mouthVertex : gmouth) {
-     mouthDraw.vertex(mouthVertex.x, mouthVertex.y);
-   }
-     
-  mouthDraw.endShape(CLOSE);
-  shape(mouthDraw);
+    fill(255, 0, 0);
+    mouthDraw=createShape();
+    mouthDraw.beginShape();
+    for (PVector mouthVertex : gmouth) {
+      mouthDraw.vertex(mouthVertex.x, mouthVertex.y);
+    }
 
-}
+    mouthDraw.endShape(CLOSE);
+    shape(mouthDraw);
+  }
 
 
   void track1() {
@@ -372,10 +377,10 @@ void update(){
     }
   }
 
-  void inEyesCheck(Particle p){
+  void inEyesCheck(Particle p) {
     Vec2 pos = box2d.getBodyPixelCoord(p.body);
     if (inPolyCheck(pos.x, pos.y, geyeL)||
-    inPolyCheck(pos.x, pos.y, geyeR)){
+      inPolyCheck(pos.x, pos.y, geyeR)) {
       p.inEyes=true;
       --HP;
     }
