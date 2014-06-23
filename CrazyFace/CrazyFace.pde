@@ -51,7 +51,7 @@ void setup() {
 
 void draw() {  
 
-//  println(frameRate );
+  println(frameRate );
 
   level = score/10+1;
   background(200);
@@ -59,39 +59,35 @@ void draw() {
   box2d.step();
   
   // Simulating particles
-  if (random(1) < (level*3-2)/100.0) {
+  if (random(1) < (1.5)/100.0) {
     Particle p = new Particle(width+20, random(0+20, height-20), 30);
     p.animation=new Animation(monsterImages, 12);
     particles.add(p);
     p.body.setLinearVelocity(new Vec2(random(-10, -5), random(-5, 5)));
     p.body.setAngularVelocity(random(-1, 1));
   }
-  if (random(1) < (level*3-2)/100.0) {
+  if (random(1) < (1.5)/100.0) {
     Particle p = new Particle(-20, random(0+20, height-20), 30);
     p.animation=new Animation(monsterImages, 12);
     particles.add(p);
     p.body.setLinearVelocity(new Vec2(random(5, 10), random(-5, 5)));
     p.body.setAngularVelocity(random(-1, 1));
   }
-  
-  
-  
-  
-
-
-
+  if (face.found>0){
   face.track1();
   face.track2();
   face.update();
   face.display();
-  
+  }
   for (int i = particles.size ()-1; i >= 0; i--) {
     Particle p = particles.get(i);
-    p.move(face.eyeLeftPos);
     p.display();
+    if (face.found>0){
+    p.move(face.eyeLeftPos);
     face.eatCheck(p );
     face.inMouthCheck(p );
     face.inEyesCheck(p );
+    }
     if (p.done()) {
       particles.remove(i);
     }
@@ -129,13 +125,16 @@ void beginContact(Contact cp) {
   // Get our objects that reference these bodies
   Object o1 = b1.getUserData();
   Object o2 = b2.getUserData();
-  if ( o2.getClass() == Face.class) {
-    Particle p1=(Particle) o1;
-    p1.hitted=true;
-  } else if (o1.getClass() == Face.class) {
-    Particle p2=(Particle) o2;
-    p2.hitted=true;
-  } else if (o1.getClass()==Particle.class && o2.getClass()==Particle.class) {
+  if (face.found>0){
+    if ( o2.getClass() == Face.class) {
+      Particle p1=(Particle) o1;
+      p1.hitted=true;
+    } else if (o1.getClass() == Face.class) {
+      Particle p2=(Particle) o2;
+      p2.hitted=true;
+    }
+  }
+  else if (o1.getClass()==Particle.class && o2.getClass()==Particle.class) {
     Particle p1=(Particle) o1;
     Particle p2=(Particle) o2;
     if (p1.hitted==true) {

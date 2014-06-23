@@ -116,9 +116,9 @@ class Particle {
     if ( len < 800) {
       Vec2 noise = new Vec2(random(-0.5, 0.5), random(-6, 6));
       if (len<100) {
-        body.applyForceToCenter((diff.mul(200.0).add(noise)).sub(body.getLinearVelocity()));
+        body.applyForceToCenter((diff.mul(level*200.0).add(noise)).sub(body.getLinearVelocity()));
       } else {
-        body.setLinearVelocity(diff.mul(300.0/len).add(noise));
+        body.setLinearVelocity(diff.mul(level*300.0/len).add(noise));
       }
     }
   }
