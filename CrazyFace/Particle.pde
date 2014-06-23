@@ -85,6 +85,9 @@ class Particle {
     else {
       animation.display(-w/2,-h/2-5, 0.2);
     }
+//    stroke(255);
+//    rectMode(CENTER);
+//    rect(0,0,w,h);
     popMatrix();
   }
 

@@ -35,6 +35,8 @@ PImage[] explosionImages;
 PImage[] eyesImages;
 PImage red;
 PImage[] monster5;
+PImage back;
+
 void setup() {
   size(1024, 768, P2D);
   frameRate(60);
@@ -55,7 +57,7 @@ void setup() {
   red = loadImage("red.png");
   red.resize(30, 0);
   monster5= readMonster5Images(7, 100, 0);
-
+  back = loadImage("beijing.png");
   face = new Face();
 }
 
@@ -63,11 +65,16 @@ void draw() {
 
 //  println(frameRate);
   level = score/10+1;
-  background(255, 248, 225);
+  background(back);
   stroke(0);
   box2d.step();
-
-  // Simulating particles
+  face.track1();
+  face.track2();
+  face.update();
+  if (face.found>0) {
+    face.display();
+  }
+  
   if (random(1) < (1.5)/100.0) {
     Particle p = new Particle(width+20, random(0+20, height-20), 30);
     particles.add(p);
@@ -81,21 +88,10 @@ void draw() {
     p.body.setLinearVelocity(new Vec2(random(5, 10), random(-5, 5)));
     p.body.setAngularVelocity(random(-1, 1));
   }
-
-
   if (random(1) < (0.5)/100.0) {
     BallMonster w = new BallMonster(-20, random(0+20, height-20), random(5, 10), random(-5, 5));
     ballMonsters.add(w);
   }
-
-
-  face.track1();
-  face.track2();
-  face.update();
-  if (face.found>0) {
-    face.display();
-  }
-  
   for (int i = ballMonsters.size ()-1; i >= 0; i--) {
     BallMonster w = ballMonsters.get(i);
     w.display();
@@ -103,8 +99,6 @@ void draw() {
       ballMonsters.remove(i);
     }
   }  
-
-  
   for (int i = particles.size ()-1; i >= 0; i--) {
     Particle p = particles.get(i);
     p.display();
