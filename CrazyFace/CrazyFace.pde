@@ -56,7 +56,6 @@ void setup() {
   red.resize(30, 0);
   monster5= readMonster5Images(7, 100, 0);
 
-
   face = new Face();
 }
 
@@ -88,13 +87,7 @@ void draw() {
     BallMonster w = new BallMonster(-20, random(0+20, height-20), random(5, 10), random(-5, 5));
     ballMonsters.add(w);
   }
-  for (int i = ballMonsters.size ()-1; i >= 0; i--) {
-    BallMonster w = ballMonsters.get(i);
-    w.display();
-    if (w.done()) {
-      ballMonsters.remove(i);
-    }
-  }
+
 
   face.track1();
   face.track2();
@@ -103,6 +96,13 @@ void draw() {
     face.display();
   }
   
+  for (int i = ballMonsters.size ()-1; i >= 0; i--) {
+    BallMonster w = ballMonsters.get(i);
+    w.display();
+    if (w.done()) {
+      ballMonsters.remove(i);
+    }
+  }  
 
   
   for (int i = particles.size ()-1; i >= 0; i--) {
