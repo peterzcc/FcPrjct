@@ -68,13 +68,13 @@ void draw() {
   box2d.step();
 
   // Simulating particles
-  if (random(1) < (2)/100.0) {
+  if (random(1) < (1.5)/100.0) {
     Particle p = new Particle(width+20, random(0+20, height-20), 30);
     particles.add(p);
     p.body.setLinearVelocity(new Vec2(random(-10, -5), random(-5, 5)));
     p.body.setAngularVelocity(random(-1, 1));
   }
-  if (random(1) < (2)/100.0) {
+  if (random(1) < (1.5)/100.0) {
     Particle p = new Particle(-20, random(0+20, height-20), 30);
     p.animation=new Animation(monsterImages, 12);
     particles.add(p);
@@ -83,7 +83,7 @@ void draw() {
   }
 
 
-  if (random(1) < (2)/100.0) {
+  if (random(1) < (0.5)/100.0) {
     BallMonster w = new BallMonster(-20, random(0+20, height-20), random(5, 10), random(-5, 5));
     ballMonsters.add(w);
   }
