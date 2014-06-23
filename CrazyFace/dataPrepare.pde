@@ -65,6 +65,17 @@ PImage[]  readExpImages( int num,int scaleX,int scaleY){
   return images;
 }
 
+PImage[]  readMonster5Images( int num,int scaleX,int scaleY){
+    PImage[] images = new PImage[num];
+    for (int i=0; i<num;++i){
+      int index = i+1;
+      String name = "data/monster5/"+index+".png";
+      images[i]= loadImage(name);
+      images[i].resize(scaleX,scaleY);
+  }
+  return images;
+}
+
 float browCenterY=-1.4604;
 
 PVector CenterOfWeight(PVector[] vertices){

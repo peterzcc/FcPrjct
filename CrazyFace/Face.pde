@@ -25,6 +25,7 @@ class Face {
 
   //face model
   float eyeX =20;
+  float eyeY = 2.8;
   float eyeLY;
   float eyeRY;
   float mouthY=10;
@@ -32,7 +33,7 @@ class Face {
   float eyeWidth =4*eyeHeight;
   float eyebroHeight=3;
   float eyebroWidth=10;
-
+  
   //Local positions
   PVector[] eyeL =new PVector[6];
   PVector[] eyeR =new PVector[6];
@@ -115,7 +116,7 @@ class Face {
 
     for (int i=0; i<eyeR.length; ++i) {
       eyeR[i].x+=20;
-      eyeR[i].y-=eyeRight*9;
+      eyeR[i].y-=eyeY*9;
       eyeR[i].mult(4);
     }
   }
@@ -136,7 +137,7 @@ class Face {
 
     for (int i=0; i<eyeR.length; ++i) {
       eyeL[i].x-=20;
-      eyeL[i].y-=eyeLeft*9;
+      eyeL[i].y-=eyeY*9;
       eyeL[i].mult(4);
     }
   }

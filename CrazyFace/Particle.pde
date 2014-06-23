@@ -24,27 +24,24 @@ class Particle {
   
   float box2dw=15;
   float box2dh=18;
-  
+  Particle(){
+  }
   Particle(float x, float y, float r_) {
     r = r_;
     // This function puts the particle in the Box2d world
     makeBody(x, y, r);
     body.setUserData(this);
-    col = color(175);
     animation=new Animation(monsterImages, 12);
     explosion=new Explosion(explosionImages, 26);
     track = random(1)<level/5.0;
-  }
+ }
 
   // This function removes the particle from the box2d world
   void killBody() {
     box2d.destroyBody(body);
   }
 
-  // Change color when hit
-  void change() {
-    col = color(255, 0, 0);
-  }
+
 
   // Is the particle ready for deletion?
   boolean done() {
@@ -88,11 +85,9 @@ class Particle {
     else {
       animation.display(-w/2,-h/2-5, 0.2);
     }
-
     popMatrix();
   }
 
-  // Here's our function that adds the particle to the Box2D world
   void makeBody(float x, float y, float r) {
     // Define a body
     BodyDef bd = new BodyDef();
@@ -118,7 +113,6 @@ class Particle {
 
     body.createFixture(fd);
 
-    // Give it a random initial velocity (and angular velocity)
   }
 
   void move(Vec2 target) {
