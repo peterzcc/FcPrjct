@@ -30,6 +30,7 @@ PShape rightBro;
 float step=0;
 
 PImage[] monsterImages;
+PImage[] explosionImages;
 PImage red;
 void setup() {
   size(1024, 768, P2D);
@@ -44,23 +45,22 @@ void setup() {
   particles = new ArrayList<Particle>();
   face = new Face();
   monsterImages = readImages("heihei", 12, 30, 0);
+  explosionImages = readExpImages(26,100,0);
   red = loadImage("red.png");
   red.resize(30, 0);
 }
 
 void draw() {  
 
-  println(frameRate );
-
+println(frameRate);
   level = score/10+1;
-  background(200);
+  background(255,248,225);
   stroke(0);
   box2d.step();
 
   // Simulating particles
   if (random(1) < (1.3)/100.0) {
     Particle p = new Particle(width+20, random(0+20, height-20), 30);
-    p.animation=new Animation(monsterImages, 12);
     particles.add(p);
     p.body.setLinearVelocity(new Vec2(random(-10, -5), random(-5, 5)));
     p.body.setAngularVelocity(random(-1, 1));
@@ -90,7 +90,6 @@ void draw() {
     if (p.done()) {
       particles.remove(i);
     }
-    //     print(face.toString());
   }
 
   fill(0, 0, 255);

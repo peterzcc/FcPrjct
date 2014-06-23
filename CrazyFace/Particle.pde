@@ -11,6 +11,7 @@ class Particle {
   Body body;
   float r;
   Animation animation;
+  Explosion explosion;
   Boolean isFirst=true;
   color col;
   Boolean eaten=false;
@@ -18,13 +19,16 @@ class Particle {
   Boolean inEyes = false;
   Boolean hitted=false;
   Boolean destroyed = false;
-
+  Boolean exploded = false;
+  
   Particle(float x, float y, float r_) {
     r = r_;
     // This function puts the particle in the Box2d world
     makeBody(x, y, r);
     body.setUserData(this);
     col = color(175);
+    animation=new Animation(monsterImages, 12);
+    explosion=new Explosion(explosionImages, 26);
   }
 
   // This function removes the particle from the box2d world
@@ -42,8 +46,11 @@ class Particle {
     // Let's find the screen position of the particle
     Vec2 pos = box2d.getBodyPixelCoord(body);
     // Is it off the bottom of the screen?
-    if (pos.y > height+r*2 || pos.x<-50 || pos.x>width+50 || eaten || inEyes||destroyed) {
-      if (eaten) ++score;
+    if (pos.y > height+r*2 || pos.x<-50 || pos.x>width+50 
+          || eaten
+          || inEyes
+          ||exploded) {
+      if (eaten||exploded) ++score;
       killBody();
       return true;
     }
@@ -64,9 +71,12 @@ class Particle {
     strokeWeight(1);
     if (hitted)
     {
-
-      image(red, -r, -r);
-    } else {
+      if (destroyed){
+        exploded=explosion.display(-r,-r);
+      }
+      else image(red, -r, -r);
+    } 
+    else {
       animation.display(-r, -r, 0.2);
     }
     // ellipse(0, 0, r*2, r*2);
