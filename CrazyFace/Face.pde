@@ -52,6 +52,9 @@ class Face {
   Body beyeBR;
   Body beyeBL;
 
+  Animation eyeLAni;
+  Animation eyeRAni;
+  
   Vec2 eyeLeftPos = new Vec2();
   
   Face() {
@@ -73,6 +76,8 @@ class Face {
     }
     makeBodyR();
     makeBodyL();
+    eyeLAni = new Animation(eyesImages,14);
+    eyeRAni = new Animation(eyesImages,14);
   }
 
   void mouthLocalUpdate() {
@@ -305,12 +310,14 @@ void update(){
   translate(coorR.x,coorR.y);
   rotate(-frame.z);
   ellipse(0,0,eyeWidth*3,eyeHeight*3);
+  eyeRAni.display(0-10,0-10,0.2);
   popMatrix();
 
   pushMatrix();
   translate(coorL.x,coorL.y);
   rotate(-frame.z);
   ellipse(0,0,eyeWidth*3,eyeHeight*3);
+  eyeLAni.display(0-10,0-10,0.2);
   popMatrix();
 
   fill(255, 0, 0);

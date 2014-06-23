@@ -31,6 +31,7 @@ float step=0;
 
 PImage[] monsterImages;
 PImage[] explosionImages;
+PImage[] eyesImages;
 PImage red;
 void setup() {
   size(1024, 768, P2D);
@@ -44,11 +45,13 @@ void setup() {
   box2d.listenForCollisions();
   particles = new ArrayList<Particle>();
   weapons = new ArrayList<Weapon>();
-  face = new Face();
+
   monsterImages = readImages("heihei", 12, 30, 0);
   explosionImages = readExpImages(26,100,0);
+  eyesImages = readEyeImages("eye",14,20,0);
   red = loadImage("red.png");
   red.resize(30, 0);
+  face = new Face();
 }
 
 void draw() {  

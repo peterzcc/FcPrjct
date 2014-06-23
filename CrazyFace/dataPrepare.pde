@@ -43,6 +43,16 @@ PImage[]  readImages(String prefix, int num,int scaleX,int scaleY){
   return images;
 }
 
+PImage[]  readEyeImages(String prefix, int num,int scaleX,int scaleY){
+    PImage[] images = new PImage[num];
+    for (int i=0; i<num;++i){
+      String name = prefix+i+".png";
+//      println(name);
+      images[i]= loadImage(name);
+      images[i].resize(scaleX,scaleY);
+  }
+  return images;
+}
 
 PImage[]  readExpImages( int num,int scaleX,int scaleY){
     PImage[] images = new PImage[num];
