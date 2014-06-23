@@ -38,9 +38,8 @@ void setup() {
 
   // Initialize box2d
   box2d = new Box2DProcessing(this);
-
   box2d.createWorld();
-  //  box2d.step(1/30.0,8,3);
+  box2d.step(1/60.0, 8, 3);
   box2d.listenForCollisions();
   particles = new ArrayList<Particle>();
   face = new Face();
@@ -57,50 +56,50 @@ void draw() {
   background(200);
   stroke(0);
   box2d.step();
-  
+
   // Simulating particles
-  if (random(1) < (1.5)/100.0) {
+  if (random(1) < (1.3)/100.0) {
     Particle p = new Particle(width+20, random(0+20, height-20), 30);
     p.animation=new Animation(monsterImages, 12);
     particles.add(p);
     p.body.setLinearVelocity(new Vec2(random(-10, -5), random(-5, 5)));
     p.body.setAngularVelocity(random(-1, 1));
   }
-  if (random(1) < (1.5)/100.0) {
+  if (random(1) < (1.3)/100.0) {
     Particle p = new Particle(-20, random(0+20, height-20), 30);
     p.animation=new Animation(monsterImages, 12);
     particles.add(p);
     p.body.setLinearVelocity(new Vec2(random(5, 10), random(-5, 5)));
     p.body.setAngularVelocity(random(-1, 1));
   }
-  if (face.found>0){
-  face.track1();
-  face.track2();
-  face.update();
-  face.display();
+  if (face.found>0) {
+    face.track1();
+    face.track2();
+    face.update();
+    face.display();
   }
   for (int i = particles.size ()-1; i >= 0; i--) {
     Particle p = particles.get(i);
     p.display();
-    if (face.found>0){
-    p.move(face.eyeLeftPos);
-    face.eatCheck(p );
-    face.inMouthCheck(p );
-    face.inEyesCheck(p );
+    if (face.found>0) {
+      p.move(face.eyeLeftPos);
+      face.eatCheck(p );
+      face.inMouthCheck(p );
+      face.inEyesCheck(p );
     }
     if (p.done()) {
       particles.remove(i);
     }
     //     print(face.toString());
   }
-  
+
   fill(0, 0, 255);
   textSize(30 );
   text("Score: "+score, 30, 50);
   text("Level "+level, width/2-50, 50);
   fill(255, 0, 0);
   text("HP: "+ HP, width-200, 50);
-  
+
   //  if (HP<=0) {
   //      fill(255, 0, 0);
   //      rect(0, 0, width, height);
@@ -125,7 +124,7 @@ void beginContact(Contact cp) {
   // Get our objects that reference these bodies
   Object o1 = b1.getUserData();
   Object o2 = b2.getUserData();
-  if (face.found>0){
+  if (face.found>0) {
     if ( o2.getClass() == Face.class) {
       Particle p1=(Particle) o1;
       p1.hitted=true;
@@ -134,7 +133,7 @@ void beginContact(Contact cp) {
       p2.hitted=true;
     }
   }
-  else if (o1.getClass()==Particle.class && o2.getClass()==Particle.class) {
+  if (o1.getClass()==Particle.class && o2.getClass()==Particle.class) {
     Particle p1=(Particle) o1;
     Particle p2=(Particle) o2;
     if (p1.hitted==true) {
