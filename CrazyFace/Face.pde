@@ -261,20 +261,31 @@ class Face {
 
 
   void display() {
-    //  Vec2 pos = box2d.getBodyPixelCoord(beyeBR);
-    //  // Get its angle of rotation
-    //  noFill();
-    //  float a = beyeBR.getAngle();
-    //  pushMatrix();
-    //  translate(pos.x, pos.y);
-    //  rotate(-a);
-    ////  fill(color(255, 0, 0));
-    //  stroke(0);
-    // // scale(10);
-    //  strokeWeight(1);
-    // // ellipse(0, 0, 20*2, 20*2);
-    //  //line(0, 0, 20, 0);
-    //  popMatrix();
+  
+  Vec2 posBR = box2d.getBodyPixelCoord(beyeBR);
+  noFill();
+  float a = beyeBR.getAngle();
+  pushMatrix();
+  translate(posBR.x, posBR.y-5);
+  rotate(-a);
+ // fill(color(255, 0, 0));
+  stroke(0);
+  strokeWeight(1);
+  rectMode(CENTER);
+  rect(0,0,7*eyebroWidth,4*eyebroHeight);
+
+
+  popMatrix();
+  Vec2 posBL=box2d.getBodyPixelCoord(beyeBL);
+  noFill();
+  pushMatrix();
+  translate(posBL.x,posBL.y-5);
+  rotate(-a);
+  stroke(0);
+  strokeWeight(1);
+  rectMode(CENTER);
+  rect(0,0,7*eyebroWidth,4*eyebroHeight);
+  popMatrix();
   }
 
 

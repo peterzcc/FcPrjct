@@ -18,7 +18,7 @@ class Particle {
   Boolean inEyes = false;
   Boolean hitted=false;
   Boolean destroyed = false;
-  
+
   Particle(float x, float y, float r_) {
     r = r_;
     // This function puts the particle in the Box2d world
@@ -64,14 +64,13 @@ class Particle {
     strokeWeight(1);
     if (hitted)
     {
-      
-      image(red,-r,-r);
+
+      image(red, -r, -r);
+    } else {
+      animation.display(-r, -r, 0.2);
     }
-    else{
-    animation.display(-r, -r,0.2);
-    }
-   // ellipse(0, 0, r*2, r*2);
-    
+    // ellipse(0, 0, r*2, r*2);
+
     popMatrix();
   }
 
@@ -91,7 +90,7 @@ class Particle {
     //  cs.m_radius = box2d.scalarPixelsToWorld(r);
     float box2dw=box2d.scalarPixelsToWorld(r);
     float box2dh=box2d.scalarPixelsToWorld(0.6*r);
-    cs.setAsBox(box2dw,box2dh);
+    cs.setAsBox(box2dw, box2dh);
 
     FixtureDef fd = new FixtureDef();
     fd.shape = cs;
@@ -103,29 +102,24 @@ class Particle {
     body.createFixture(fd);
 
     // Give it a random initial velocity (and angular velocity)
-
   }
 
-  void move(Vec2 target){
-    if (random(1)<0.05){
-    Vec2 noise = new Vec2(random(-0.5,0.5),random(-4,4));
-    body.setLinearVelocity(noise.add(body.getLinearVelocity()));
+  void move(Vec2 target) {
+    if (random(1)<0.05) {
+      Vec2 noise = new Vec2(random(-0.5, 0.5), random(-4, 4));
+      body.setLinearVelocity(noise.add(body.getLinearVelocity()));
     }
     Vec2 diff = target.sub(body.getWorldCenter());
     float len=diff.lengthSquared();
-    
-    if ( len < 800){
-      Vec2 noise = new Vec2(random(-0.5,0.5),random(-6,6));
-//      if (len<100){
-//        body.applyForceToCenter((diff.mul(100.0).add(noise)).sub(body.getLinearVelocity()));
-//      }
-//      else{
-//        body.setLinearVelocity(diff.mul(400.0/len).add(noise));
-//      }
+    body.applyTorque(-500.0*(body.getAngle()+random(-1, 1)));
+    if (diff.y<-1) return;
+    if ( len < 800) {
+      Vec2 noise = new Vec2(random(-0.5, 0.5), random(-6, 6));
+      if (len<100) {
+        body.applyForceToCenter((diff.mul(200.0).add(noise)).sub(body.getLinearVelocity()));
+      } else {
+        body.setLinearVelocity(diff.mul(300.0/len).add(noise));
+      }
     }
-    body.applyTorque(-500.0*(body.getAngle()+random(-1,1)));
   }
-  
-
-  
 };
