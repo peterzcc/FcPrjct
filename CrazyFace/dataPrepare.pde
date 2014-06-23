@@ -1,3 +1,38 @@
+  /*
+  rightBro=createShape();
+  rightBro.beginShape();
+  for (PVector rightBroVertex : face.geyeBR) {
+    rightBro.vertex(rightBroVertex.x, rightBroVertex.y);
+  }
+  rightBro.endShape(CLOSE);
+  shape(rightBro);
+
+  leftBro=createShape();
+  leftBro.beginShape();
+  for (PVector leftBroVertex : face.geyeBL) {
+    leftBro.vertex(leftBroVertex.x, leftBroVertex.y);
+  }
+  leftBro.endShape(CLOSE);
+  shape(leftBro);
+  */
+/*
+  rightEye=createShape();
+  rightEye.beginShape();
+  for (PVector rightEyeVertex : face.geyeR) {
+    rightEye.vertex(rightEyeVertex.x, rightEyeVertex.y);
+  }
+  rightEye.endShape(CLOSE);
+  shape(rightEye);
+
+  leftEye=createShape();
+  leftEye.beginShape();
+  for (PVector leftEyeVertex : face.geyeL) {
+    leftEye.vertex(leftEyeVertex.x, leftEyeVertex.y);
+  }
+  leftEye.endShape(CLOSE);
+  shape(leftEye);
+*/
+
 PImage[]  readImages(String prefix, int num,int scaleX,int scaleY){
     PImage[] images = new PImage[num];
     for (int i=0; i<num;++i){

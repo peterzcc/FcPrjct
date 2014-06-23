@@ -45,7 +45,8 @@ class Face {
   PVector[] geyeR =new PVector[6];
   PVector[] geyeBR= new PVector[5];
   PVector[] geyeBL= new PVector[5];  
-
+  
+  PVector coorL,coorR;
   PVector geyeBRCenter = new PVector();
   PVector geyeBLCenter = new PVector();
   Body beyeBR;
@@ -182,13 +183,15 @@ class Face {
 
   void eyeRightGlobalUpdate() {
     transform(eyeR, geyeR, frame);
+    coorR = PVector.add(geyeR[0], geyeR[3]);
+    coorR.div(2 );
   }
 
   void eyeLeftGlobalUpdate() {
     transform(eyeL, geyeL, frame);
-    PVector coor = PVector.add(geyeL[0], geyeL[3]);
-    coor.div(2 );
-    eyeLeftPos = box2d.coordPixelsToWorld(coor.x, coor.y);
+    coorL = PVector.add(geyeL[0], geyeL[3]);
+    coorL.div(2 );
+    eyeLeftPos = box2d.coordPixelsToWorld(coorL.x, coorL.y);
   }
 
   void eyeBroLeftGlobalUpdate() {
@@ -197,7 +200,18 @@ class Face {
   void eyeBroRightGlobalUpdate() {
     transform(eyeBR, geyeBR, frame);
   }
-
+void update(){
+  eyeRightLocalUpdate();
+  eyeRightGlobalUpdate();
+  eyeLeftLocalUpdate();
+  eyeLeftGlobalUpdate();
+  eyeBroRightLocalUpdate();
+  eyeBroRightGlobalUpdate();
+  eyeBroLeftLocalUpdate();
+  eyeBroLeftGlobalUpdate();
+  mouthLocalUpdate();
+  mouthGlobalUpdate();
+}
 
   void makeBodyR() {
 
@@ -286,7 +300,30 @@ class Face {
   rectMode(CENTER);
   rect(0,0,7*eyebroWidth,4*eyebroHeight);
   popMatrix();
-  }
+
+  pushMatrix();
+  translate(coorR.x,coorR.y);
+  rotate(-frame.z);
+  ellipse(0,0,eyeWidth*3,eyeHeight*3);
+  popMatrix();
+
+  pushMatrix();
+  translate(coorL.x,coorL.y);
+  rotate(-frame.z);
+  ellipse(0,0,eyeWidth*3,eyeHeight*3);
+  popMatrix();
+
+  fill(255, 0, 0);
+  mouthDraw=createShape();
+  mouthDraw.beginShape();
+  for (PVector mouthVertex : gmouth) {
+     mouthDraw.vertex(mouthVertex.x, mouthVertex.y);
+   }
+     
+  mouthDraw.endShape(CLOSE);
+  shape(mouthDraw);
+
+}
 
 
   void track1() {

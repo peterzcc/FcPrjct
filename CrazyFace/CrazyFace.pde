@@ -22,7 +22,7 @@ int score=0;
 int HP = 10;
 int level = 0;
 
-PShape mouth;
+PShape mouthDraw;
 PShape leftEye; 
 PShape rightEye;
 PShape leftBro;
@@ -78,88 +78,9 @@ void draw() {
 
   face.track1();
   face.track2();
-  //  if (face.found > 0) {
-  noFill();
-  
-  
-  face.eyeRightLocalUpdate();
-  face.eyeRightGlobalUpdate();
-  face.eyeLeftLocalUpdate();
-  face.eyeLeftGlobalUpdate();
-  
-
-  rightEye=createShape();
-  rightEye.beginShape();
-  for (PVector rightEyeVertex : face.geyeR) {
-    rightEye.vertex(rightEyeVertex.x, rightEyeVertex.y);
-  }
-  rightEye.endShape(CLOSE);
-  shape(rightEye);
-
-  leftEye=createShape();
-  leftEye.beginShape();
-  for (PVector leftEyeVertex : face.geyeL) {
-    leftEye.vertex(leftEyeVertex.x, leftEyeVertex.y);
-  }
-  leftEye.endShape(CLOSE);
-  shape(leftEye);
-
-
-  PVector coorL,coorR;
-  coorR = PVector.add(face.geyeR[0], face.geyeR[3]);
-  coorR.div(2 );
-  coorL = PVector.add(face.geyeL[0], face.geyeL[3]);
-  coorL.div(2 );
-  pushMatrix();
-  translate(coorR.x,coorR.y);
-  rotate(-face.frame.z);
-  ellipse(0,0,face.eyeWidth*3,face.eyeHeight*3);
-  popMatrix();
-  pushMatrix();
-  translate(coorL.x,coorL.y);
-  rotate(-face.frame.z);
-  ellipse(0,0,face.eyeWidth*3,face.eyeHeight*3);
-  popMatrix();
-
-  face.eyeBroRightLocalUpdate();
-  face.eyeBroRightGlobalUpdate();
-  face.eyeBroLeftLocalUpdate();
-  face.eyeBroLeftGlobalUpdate();
-  
-  /*
-  rightBro=createShape();
-  rightBro.beginShape();
-  for (PVector rightBroVertex : face.geyeBR) {
-    rightBro.vertex(rightBroVertex.x, rightBroVertex.y);
-  }
-  rightBro.endShape(CLOSE);
-  shape(rightBro);
-
-  leftBro=createShape();
-  leftBro.beginShape();
-  for (PVector leftBroVertex : face.geyeBL) {
-    leftBro.vertex(leftBroVertex.x, leftBroVertex.y);
-  }
-  leftBro.endShape(CLOSE);
-  shape(leftBro);
-  */
-  
-  
-
-  face.mouthLocalUpdate();
-  face.mouthGlobalUpdate();
-  
-  fill(255, 0, 0);
-  mouth=createShape();
-  mouth.beginShape();
-  for (PVector mouthVertex : face.gmouth) {
-     mouth.vertex(mouthVertex.x, mouthVertex.y);
-   }
-     
-   mouth.endShape(CLOSE);
-   shape(mouth);
-   
+  face.update();
   face.display();
+  
   for (int i = particles.size ()-1; i >= 0; i--) {
     Particle p = particles.get(i);
     p.move(face.eyeLeftPos);
