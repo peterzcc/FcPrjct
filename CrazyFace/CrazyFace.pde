@@ -17,7 +17,7 @@ Box2DProcessing box2d;
 // our FaceOSC tracked face dat
 Face face;
 ArrayList<Particle> particles;
-
+ArrayList<Weapon> weapons;
 int score=0;
 int HP = 10;
 int level = 0;
@@ -43,6 +43,7 @@ void setup() {
   box2d.step(1/60.0, 8, 3);
   box2d.listenForCollisions();
   particles = new ArrayList<Particle>();
+  weapons = new ArrayList<Weapon>();
   face = new Face();
   monsterImages = readImages("heihei", 12, 30, 0);
   explosionImages = readExpImages(26,100,0);
@@ -52,7 +53,7 @@ void setup() {
 
 void draw() {  
 
-println(frameRate);
+//println(frameRate);
   level = score/10+1;
   background(255,248,225);
   stroke(0);
@@ -72,10 +73,11 @@ println(frameRate);
     p.body.setLinearVelocity(new Vec2(random(5, 10), random(-5, 5)));
     p.body.setAngularVelocity(random(-1, 1));
   }
+  
+  face.track1();
+  face.track2();
+  face.update();
   if (face.found>0) {
-    face.track1();
-    face.track2();
-    face.update();
     face.display();
   }
   for (int i = particles.size ()-1; i >= 0; i--) {
@@ -91,6 +93,22 @@ println(frameRate);
       particles.remove(i);
     }
   }
+  
+  if (face.eyebrowLeft<7.8 && face.mouthWidth>18.3 && random(1)<0.1){
+    Weapon w1 = new Weapon(face.coorL.x-60,face.coorL.y+40,-100.0,0.0);
+    weapons.add(w1);
+    Weapon w2 = new Weapon(face.coorR.x+60,face.coorR.y+40,100.0,0.0);
+    weapons.add(w2);
+  }
+  
+  for (int i=weapons.size()-1;i>=0;--i){
+    Weapon w = weapons.get(i);
+    w.display();
+    if (w.done()){
+      weapons.remove(i);
+    }
+  }
+  
 
   fill(0, 0, 255);
   textSize(30 );
@@ -99,6 +117,9 @@ println(frameRate);
   fill(255, 0, 0);
   text("HP: "+ HP, width-200, 50);
 
+
+//  print(face.eyebrowLeft +"\t" +face.eyebrowRight);
+  println(face.mouthWidth);
   //  if (HP<=0) {
   //      fill(255, 0, 0);
   //      rect(0, 0, width, height);
@@ -143,6 +164,14 @@ void beginContact(Contact cp) {
       p2.destroyed = true;
       p1.hitted=true;
     }
+  }else if (o1.getClass()==Weapon.class){
+    Particle p2=(Particle) o2;
+    p2.hitted=true;
+    p2.destroyed=true;
+  }else if (o2.getClass()==Weapon.class){
+    Particle p1=(Particle) o1;
+    p1.hitted=true;
+    p1.destroyed=true;
   }
 }
 

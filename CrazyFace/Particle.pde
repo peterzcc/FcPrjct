@@ -20,7 +20,7 @@ class Particle {
   Boolean hitted=false;
   Boolean destroyed = false;
   Boolean exploded = false;
-  
+  Boolean track=false;
   Particle(float x, float y, float r_) {
     r = r_;
     // This function puts the particle in the Box2d world
@@ -29,6 +29,7 @@ class Particle {
     col = color(175);
     animation=new Animation(monsterImages, 12);
     explosion=new Explosion(explosionImages, 26);
+    track = random(1)<level/5.0;
   }
 
   // This function removes the particle from the box2d world
@@ -123,12 +124,12 @@ class Particle {
     float len=diff.lengthSquared();
     body.applyTorque(-500.0*(body.getAngle()+random(-1, 1)));
     if (diff.y<-1) return;
-    if ( len < 800) {
+    if (track && len < 800) {
       Vec2 noise = new Vec2(random(-0.5, 0.5), random(-6, 6));
       if (len<100) {
-        body.applyForceToCenter((diff.mul(level*200.0).add(noise)).sub(body.getLinearVelocity()));
+        body.applyForceToCenter((diff.mul(200.0).add(noise)).sub(body.getLinearVelocity()));
       } else {
-        body.setLinearVelocity(diff.mul(level*300.0/len).add(noise));
+        body.setLinearVelocity(diff.mul(300.0/len).add(noise));
       }
     }
   }
