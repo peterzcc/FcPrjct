@@ -56,7 +56,8 @@ void draw() {
   level = score/10+1;
   background(200);
   stroke(0);
-
+  box2d.step();
+  
   // Simulating particles
   if (random(1) < (level*3-2)/100.0) {
     Particle p = new Particle(width+20, random(0+20, height-20), 30);
@@ -72,7 +73,10 @@ void draw() {
     p.body.setLinearVelocity(new Vec2(random(5, 10), random(-5, 5)));
     p.body.setAngularVelocity(random(-1, 1));
   }
-  box2d.step();
+  
+  
+  
+  
 
 
 
