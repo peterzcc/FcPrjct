@@ -4,9 +4,6 @@ import ddf.minim.*;
 import ddf.minim.analysis.*;
 import ddf.minim.ugens.*;
 import ddf.minim.effects.*;
-
-
-
 import oscP5.*;
 OscP5 oscP5;
 
@@ -28,6 +25,7 @@ ArrayList<Particle> particles;
 ArrayList<Weapon> weapons;
 ArrayList<BallMonster> ballMonsters;
 ArrayList<Worm> worms = new ArrayList<Worm>();
+ArrayList<Dog> dogs = new ArrayList<Dog>();
 int score=0;
 int level = 0;
 Boolean playing = false;
@@ -38,7 +36,7 @@ float step=0;
 
 PImage[] monsterImages; PImage[] explosionImages; PImage[] eyesImages;
 PImage red;
-PImage[] monster5,wormIm;
+PImage[] monster5,wormIm,dogIm;
 PImage back;
 
 Minim minim; AudioPlayer eatSound,exploSound,hurtSound;
@@ -59,11 +57,14 @@ void setup() {
 
   monsterImages = readImages("heihei", 12, 48, 0);
   explosionImages = readExpImages(26, 160, 0);
-  eyesImages = readEyeImages("eye", 14, 20, 0);
+  
   red = loadImage("red.png");
   red.resize(48, 0);
   monster5= readMonster5Images(7, 160, 0);
-  wormIm = new PImage[1];wormIm[0] = loadImage("worm.png" );wormIm[0].resize(400,0);
+  wormIm = readEyeImages("data/worm/",11,400,0);
+//  wormIm[0] = loadImage("worm.png" );wormIm[0].resize(400,0);
+  
+  dogIm = new PImage[1];dogIm[0] = loadImage("monster1.png");dogIm[0].resize(200,0);
   
   back = loadImage("beijing.png");
   face = new Face();
@@ -74,12 +75,11 @@ void setup() {
   hurtSound = minim.loadFile("scream.wav");
   
   button1= new button(displayWidth/2-400,displayHeight/2-200,50);
+  
 
 }
 
 void draw() {  
-  
-  println(frameRate);
 //  background(back);
   image(back,0,0);
   stroke(0);

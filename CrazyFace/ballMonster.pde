@@ -73,7 +73,19 @@ class BallMonster
     box2d.destroyBody(body);
   }
 
-
+  void inMouthCheck(Face face) {
+    if (!inMouse) {
+      Vec2 pos = box2d.getBodyPixelCoord(body);
+      inMouse = (inPolyCheck(pos.x, pos.y, face.gmouth)&&face.mouthHeight>2);
+    }
+  }
+  
+  void eatCheck(Face face) {
+    if (inMouse) {
+      Vec2 pos = box2d.getBodyPixelCoord(body);
+      eaten = !inPolyCheck(pos.x, pos.y, face.gmouth);
+    }
+  }
 
   // Is the particle ready for deletion?
   boolean done() {
@@ -84,7 +96,7 @@ class BallMonster
       || eaten
       || inEyes
       ||exploded) {
-      if (eaten||exploded) ++score;
+      --face.LHealth; --face.RHealth;
       killBody();
       return true;
     }

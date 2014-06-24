@@ -87,8 +87,13 @@ class Face {
     }
     makeBodyR();
     makeBodyL();
-    eyeLAni = new Animation(eyesImages, 14);
-    eyeRAni = new Animation(eyesImages, 14);
+//    eyeLAni = new Animation(eyesImages, 14);
+//    eyeRAni = new Animation(eyesImages, 14);
+    eyesImages = readEyeImages("data/eye/", 28, 80, 0);
+    
+    eyeLAni = new Animation(eyesImages);
+    eyeRAni = new Animation(eyesImages);
+    
     eyeLIm = loadImage("eye.png");
     eyeLIm.resize(80, 0);
     eyeRIm = loadImage("eye.png");
@@ -350,13 +355,16 @@ class Face {
     rectMode(CENTER);
     rect(0, 0, 7*eyebroWidth, 4*eyebroHeight);
     popMatrix();
-
+    
+    Boolean changeEye =( random(1)<0.2);
+    Boolean changeRollingDirection = (random(1 )<0.05);
     //Right eye
     pushMatrix();
     translate(coorR.x, coorR.y);
     rotate(-frame.z);
     ellipse(0, 0, eyeWidth*3, eyeHeight*3);
-    image(eyeRIm,-eyeRIm.width/2,-eyeRIm.height/2);
+//    image(eyeRIm,-eyeRIm.width/2,-eyeRIm.height/2);
+    imageMode(CENTER);eyeRAni.display(changeEye,changeRollingDirection);imageMode(CORNER );
     if (RHealth>0) image(eyeRHealth[RHealth],-eyeRHealth[RHealth].width/2,-eyeRHealth[RHealth].height/2);
     else image(eyeRHealth[0],-eyeRHealth[0].width/2,-eyeRHealth[0].height/2);
     popMatrix();
@@ -366,7 +374,8 @@ class Face {
     translate(coorL.x, coorL.y);
     rotate(-frame.z);
     ellipse(0, 0, eyeWidth*3, eyeHeight*3);
-    image(eyeLIm,-eyeLIm.width/2,-eyeLIm.height/2);
+//    image(eyeLIm,-eyeLIm.width/2,-eyeLIm.height/2);
+    imageMode(CENTER);eyeLAni.display(changeEye,changeRollingDirection);imageMode(CORNER );
     if (LHealth>0) image(eyeLHealth[LHealth],-eyeLHealth[LHealth].width/2,-eyeLHealth[LHealth].height/2);
     else  image(eyeLHealth[0],-eyeLHealth[0].width/2,-eyeLHealth[0].height/2);
     popMatrix();

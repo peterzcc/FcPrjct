@@ -1,11 +1,10 @@
-void startdisplay(){
+void startdisplay() {
   button1.display();
-  
 }
 
-void startgame(){
-  if(mousePressed==true&&mouseX>=displayWidth/2-100 && mouseX<=displayWidth/2+100 && mouseY>=displayHeight/2-50 &&mouseY<=displayHeight/2+50)
-  mode++;
+void startgame() {
+  if (mousePressed==true&&mouseX>=displayWidth/2-100 && mouseX<=displayWidth/2+100 && mouseY>=displayHeight/2-50 &&mouseY<=displayHeight/2+50)
+    mode++;
 }
 
 void handleSpecialSkill() {
@@ -27,38 +26,53 @@ void handleSpecialSkill() {
 }
 
 void addMonsters() {
-  /*
-  if (random(1) < (1.5)/100.0) {
-    Particle p = new Particle(width+20, random(0+20, height-20), 30);
-    particles.add(p);
-    p.body.setLinearVelocity(new Vec2(random(-10, -5), random(-5, 5)));
-    p.body.setAngularVelocity(random(-1, 1));
-  }
-  if (random(1) < (1.5)/100.0) {
-    Particle p = new Particle(-20, random(0+20, height-20), 30);
-    p.animation=new Animation(monsterImages, 12);
-    particles.add(p);
-    p.body.setLinearVelocity(new Vec2(random(5, 10), random(-5, 5)));
-    p.body.setAngularVelocity(random(-1, 1));
-  }
   
+  if (random(1) < (0.3)/100.0) {
+   Particle p = new Particle(width+20, random(0+20, height-20), 30);
+   particles.add(p);
+   p.body.setLinearVelocity(new Vec2(random(-10, -5), random(-5, 5)));
+   p.body.setAngularVelocity(random(-1, 1));
+   }
+   if (random(1) < (0.3)/100.0) {
+   Particle p = new Particle(-20, random(0+20, height-20), 30);
+   p.animation=new Animation(monsterImages, 12);
+   particles.add(p);
+   p.body.setLinearVelocity(new Vec2(random(5, 10), random(-5, 5)));
+   p.body.setAngularVelocity(random(-1, 1));
+   }
+   
+   if (random(1) < (0.3)/100.0) {
+   BallMonster w = new BallMonster(-20, random(0+20, height-20), random(21, 33), random(-2, 2));
+   ballMonsters.add(w);
+   }
+   
+   
+   if (random(1) < (0.3)/100.0) {
+   Worm w = new Worm(width+20, random(0+20, height-20), -random(5, 10), random(-5, 5));
+   worms.add(w);
+   }
+   
   if (random(1) < (1)/100.0) {
-    BallMonster w = new BallMonster(-20, random(0+20, height-20), random(21, 33), random(-2, 2));
-    ballMonsters.add(w);
+    Dog w = new Dog(width+20, random(0+20, height-20), -random(5, 10), random(-5, 5));
+    dogs.add(w);
   }
-  */
-  
-  if (random(1) < (0.5)/100.0) {
-    Worm w = new Worm(width+20, random(0+20, height-20), -random(5, 10), random(-5, 5));
-    worms.add(w);
-  }
-  
 }
 
 void updateMonsters() {
+  for (int i = dogs.size ()-1; i >= 0; i--) {
+    Dog w = dogs.get(i);
+    w.display();
+    w.adjust();
+    if (w.done()) {
+      dogs.remove(i);
+    }
+  }
   for (int i = ballMonsters.size ()-1; i >= 0; i--) {
     BallMonster w = ballMonsters.get(i);
     w.display();
+    w.inMouthCheck(face );
+    w.eatCheck( face );
+
     if (w.done()) {
       ballMonsters.remove(i);
     }
@@ -72,7 +86,7 @@ void updateMonsters() {
       worms.remove(i);
     }
   }
-  
+
   for (int i = particles.size ()-1; i >= 0; i--) {
     Particle p = particles.get(i);
     p.display();
@@ -86,7 +100,6 @@ void updateMonsters() {
       particles.remove(i);
     }
   }
-  
 }
 
 PImage[]  readImages(String prefix, int num, int scaleX, int scaleY) {
@@ -102,7 +115,8 @@ PImage[]  readImages(String prefix, int num, int scaleX, int scaleY) {
 PImage[]  readEyeImages(String prefix, int num, int scaleX, int scaleY) {
   PImage[] images = new PImage[num];
   for (int i=0; i<num; ++i) {
-    String name = prefix+i+".png";
+    int index = i+1;
+    String name = prefix+index+".png";
     //      println(name);
     images[i]= loadImage(name);
     images[i].resize(scaleX, scaleY);
@@ -151,13 +165,13 @@ Vec2[] PVectorToVec2(PVector[] points) {
   return result;
 }
 
-float getAngle(float x,float y)
+float getAngle(float x, float y)
 {
   float a;
   if (x <=0.000001&&x>=-0.000001) {
-  a = (y>0? PI/2:-PI/2);
-  return a;
-}
+    a = (y>0? PI/2:-PI/2);
+    return a;
+  }
   float k = y/x;
   a = atan((x>0? k:-k));
   return a;
