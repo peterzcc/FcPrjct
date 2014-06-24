@@ -326,28 +326,25 @@ class Face {
 
 
   void display() {
-
+    //Right eye Brow
     Vec2 posBR = box2d.getBodyPixelCoord(beyeBR);
-    noFill();
+    fill(0);
     float a = beyeBR.getAngle();
     pushMatrix();
     translate(posBR.x, posBR.y-5);
     rotate(-a);
-    // fill(color(255, 0, 0));
-    stroke(0);
-    strokeWeight(1);
+    fill(43,101,134);
+    noStroke();
     rectMode(CENTER);
     rect(0, 0, 7*eyebroWidth, 4*eyebroHeight);
-
-
     popMatrix();
+    //Left eye Brow
     Vec2 posBL=box2d.getBodyPixelCoord(beyeBL);
-    noFill();
     pushMatrix();
     translate(posBL.x, posBL.y-5);
     rotate(-a);
-    stroke(0);
-    strokeWeight(1);
+    fill(43,101,134);
+    noStroke();
     rectMode(CENTER);
     rect(0, 0, 7*eyebroWidth, 4*eyebroHeight);
     popMatrix();
