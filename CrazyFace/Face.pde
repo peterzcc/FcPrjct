@@ -64,7 +64,9 @@ class Face {
   int RHealth;
 
   Vec2 eyeLeftPos = new Vec2();
-
+  
+  //Blood
+  
   Face() {
 
     for (int i=0; i<mouth.length; ++i) {
@@ -369,18 +371,20 @@ class Face {
     else  image(eyeLHealth[0],-eyeLHealth[0].width/2,-eyeLHealth[0].height/2);
     popMatrix();
 
+    
+    
     fill(255, 101, 41);
     strokeJoin(ROUND);
     stroke(185,74,30);
     strokeWeight(8);
-    mouthDraw=createShape();
-    mouthDraw.beginShape();
+    createShape();
+    beginShape();
     for (PVector mouthVertex : gmouth) {
-      mouthDraw.vertex(mouthVertex.x, mouthVertex.y);
+      vertex(mouthVertex.x, mouthVertex.y);
     }
 
-    mouthDraw.endShape(CLOSE);
-    shape(mouthDraw);
+    endShape(CLOSE);
+//    shape(mouthDraw);
   }
 
 
@@ -408,29 +412,28 @@ class Face {
     beyeBL.setAngularVelocity(omega*20);
   }
 
-  void eatCheck(Particle p) {
-    if (p.inMouse) {
-      Vec2 pos = box2d.getBodyPixelCoord(p.body);
-      p.eaten = !inPolyCheck(pos.x, pos.y, gmouth);
-    }
-  }
-
-
-  void inMouthCheck(Particle p) {
-    if (!p.inMouse) {
-      Vec2 pos = box2d.getBodyPixelCoord(p.body);
-      p.inMouse = inPolyCheck(pos.x, pos.y, gmouth);
-    }
-  }
-
-  void inEyesCheck(Particle p) {
-    Vec2 pos = box2d.getBodyPixelCoord(p.body);
-    if (inPolyCheck(pos.x, pos.y, geyeL)||
-      inPolyCheck(pos.x, pos.y, geyeR)) {
-      p.inEyes=true;
-      --HP;
-    }
-  }
+//  void eatCheck(Particle p) {
+//    if (p.inMouse) {
+//      Vec2 pos = box2d.getBodyPixelCoord(p.body);
+//      p.eaten = !inPolyCheck(pos.x, pos.y, gmouth);
+//    }
+//  }
+//
+//
+//  void inMouthCheck(Particle p) {
+//    if (!p.inMouse) {
+//      Vec2 pos = box2d.getBodyPixelCoord(p.body);
+//      p.inMouse = inPolyCheck(pos.x, pos.y, gmouth);
+//    }
+//  }
+//
+//  void inEyesCheck(Particle p) {
+//    Vec2 pos = box2d.getBodyPixelCoord(p.body);
+//    if (inPolyCheck(pos.x, pos.y, geyeL)||
+//      inPolyCheck(pos.x, pos.y, geyeR)) {
+//      p.inEyes=true;
+//    }
+//  }
 
 
   boolean parseOSC(OscMessage m) {

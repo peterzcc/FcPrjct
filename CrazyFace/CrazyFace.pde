@@ -20,8 +20,8 @@ Face face;
 ArrayList<Particle> particles;
 ArrayList<Weapon> weapons;
 ArrayList<BallMonster> ballMonsters;
+
 int score=0;
-int HP = 10;
 int level = 0;
 Boolean playing = false;
 
