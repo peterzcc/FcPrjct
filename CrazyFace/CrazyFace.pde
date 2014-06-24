@@ -86,13 +86,9 @@ void draw() {
   text("Score: "+score, 30, 50);
   text("Level "+level, width/2-50, 50);
   fill(255, 0, 0);
-  text("HP: "+ HP, width-200, 50);
+//  text("HP: "+ HP, width-200, 50);
 
-  //  if (HP<=0) {
-  //      fill(255, 0, 0);
-  //      rect(0, 0, width, height);
-  //      noLoop();
-  //    }
+
 }
 
 // OSC CALLBACK FUNCTIONS
