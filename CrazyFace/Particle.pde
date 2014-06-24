@@ -42,7 +42,29 @@ class Particle {
   }
 
 
+  void eatCheck(Face face) {
+    if (inMouse) {
+      Vec2 pos = box2d.getBodyPixelCoord(body);
+      eaten = !inPolyCheck(pos.x, pos.y, face.gmouth);
+    }
+  }
 
+
+  void inMouthCheck(Face face) {
+    if (!inMouse) {
+      Vec2 pos = box2d.getBodyPixelCoord(body);
+      inMouse = inPolyCheck(pos.x, pos.y,face.gmouth);
+    }
+  }
+
+  void inEyesCheck(Face face) {
+    Vec2 pos = box2d.getBodyPixelCoord(body);
+    if (inPolyCheck(pos.x, pos.y, face.geyeL)||
+      inPolyCheck(pos.x, pos.y, face.geyeR)) {
+      inEyes=true;
+      --HP;
+    }
+  }
   // Is the particle ready for deletion?
   boolean done() {
     // Let's find the screen position of the particle

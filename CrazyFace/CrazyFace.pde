@@ -78,62 +78,9 @@ void draw() {
     face.display();
   }
   
-  if (random(1) < (1.5)/100.0) {
-    Particle p = new Particle(width+20, random(0+20, height-20), 30);
-    particles.add(p);
-    p.body.setLinearVelocity(new Vec2(random(-10, -5), random(-5, 5)));
-    p.body.setAngularVelocity(random(-1, 1));
-  }
-  if (random(1) < (1.5)/100.0) {
-    Particle p = new Particle(-20, random(0+20, height-20), 30);
-    p.animation=new Animation(monsterImages, 12);
-    particles.add(p);
-    p.body.setLinearVelocity(new Vec2(random(5, 10), random(-5, 5)));
-    p.body.setAngularVelocity(random(-1, 1));
-  }
-  if (random(1) < (0.5)/100.0) {
-    BallMonster w = new BallMonster(-20, random(0+20, height-20), random(5, 10), random(-5, 5));
-    ballMonsters.add(w);
-  }
-  for (int i = ballMonsters.size ()-1; i >= 0; i--) {
-    BallMonster w = ballMonsters.get(i);
-    w.display();
-    if (w.done()) {
-      ballMonsters.remove(i);
-    }
-  }  
-  for (int i = particles.size ()-1; i >= 0; i--) {
-    Particle p = particles.get(i);
-    p.display();
-    if (face.found>0) {
-      p.move(face.eyeLeftPos);
-      face.eatCheck(p );
-      face.inMouthCheck(p );
-      face.inEyesCheck(p );
-    }
-    if (p.done()) {
-      particles.remove(i);
-    }
-  }
-
-  if (face.eyebrowLeft<7.8 && face.mouthWidth>18.3 && random(1)<0.1) {
-    for (float alpha = -PI/2+PI/10; alpha<PI/2; alpha+=PI/10 ) {
-      Weapon w1 = new Weapon(face.coorL.x-60, face.coorL.y+40, alpha, -100*cos(alpha), 100*sin(alpha));
-      weapons.add(w1);
-      Weapon w2 = new Weapon(face.coorR.x+60, face.coorR.y+40, alpha, 100*cos(alpha), 100*sin(alpha));
-      weapons.add(w2);
-    }
-  }
-
-
-  for (int i=weapons.size ()-1; i>=0; --i) {
-    Weapon w = weapons.get(i);
-    w.display();
-    if (w.done()) {
-      weapons.remove(i);
-    }
-  }
-
+  addMonsters();
+  updateMonsters();
+  handleSpecialSkill();
 
   fill(0, 0, 255);
   textSize(30 );
@@ -156,14 +103,13 @@ void oscEvent(OscMessage m) {
 }
 
 void beginContact(Contact cp) {
-  // Get both shapes
   Fixture f1 = cp.getFixtureA();
   Fixture f2 = cp.getFixtureB();
-  // Get both bodies
+  
   Body b1 = f1.getBody();
   Body b2 = f2.getBody();
 
-  // Get our objects that reference these bodies
+  
   Object o1 = b1.getUserData();
   Object o2 = b2.getUserData();
   if (face.found>0) {
@@ -199,4 +145,7 @@ void beginContact(Contact cp) {
 
 // Objects stop touching each other
 void endContact(Contact cp) {
+}
+
+void mousePressed(){
 }
