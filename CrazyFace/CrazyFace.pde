@@ -31,6 +31,7 @@ ArrayList<Worm> worms = new ArrayList<Worm>();
 int score=0;
 int level = 0;
 Boolean playing = false;
+int mode;
 
 PShape mouthDraw; PShape leftEye;  PShape rightEye;PShape leftBro; PShape rightBro;
 float step=0;
@@ -41,7 +42,7 @@ PImage[] monster5,wormIm;
 PImage back;
 
 Minim minim; AudioPlayer eatSound,exploSound,hurtSound;
-
+button button1;
 void setup() {
   size(1024, 768, P2D);
   frameRate(60);
@@ -71,6 +72,9 @@ void setup() {
   eatSound = minim.loadFile("eat.wav");
   exploSound = minim.loadFile("explosion.wav");
   hurtSound = minim.loadFile("scream.wav");
+  
+  button1= new button(displayWidth/2-400,displayHeight/2-200,50);
+
 }
 
 void draw() {  
@@ -87,16 +91,20 @@ void draw() {
     face.display();
   }
   
+ if(mode==0){
+    startdisplay();
+    startgame();
+    
+  }else
+  if (mode==1){
   addMonsters();
   updateMonsters();
   handleSpecialSkill();
-
   fill(0, 0, 255);
   textSize(30 );
   text("Score: "+score, 30, 50);
   text("Level "+level, width/2-50, 50);
-  fill(255, 0, 0);
-//  text("HP: "+ HP, width-200, 50);
+  }
 
 
 }

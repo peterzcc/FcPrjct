@@ -1,3 +1,12 @@
+void startdisplay(){
+  button1.display();
+  
+}
+
+void startgame(){
+  if(mousePressed==true&&mouseX>=displayWidth/2-100 && mouseX<=displayWidth/2+100 && mouseY>=displayHeight/2-50 &&mouseY<=displayHeight/2+50)
+  mode++;
+}
 
 void handleSpecialSkill() {
   if (face.eyebrowLeft<7.8 && face.mouthWidth>18.3 && random(1)<0.1) {
