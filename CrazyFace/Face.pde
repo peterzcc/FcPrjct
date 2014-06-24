@@ -55,11 +55,18 @@ class Face {
 
   Animation eyeLAni;
   Animation eyeRAni;
+  
   PImage eyeLIm, eyeRIm;
+
+  PImage[] eyeLHealth, eyeRHealth;
+  int maxHealth=10;
+  int LHealth;
+  int RHealth;
 
   Vec2 eyeLeftPos = new Vec2();
 
   Face() {
+
     for (int i=0; i<mouth.length; ++i) {
       mouth[i] = new PVector();
       gmouth[i] = new PVector();
@@ -84,6 +91,23 @@ class Face {
     eyeLIm.resize(80, 0);
     eyeRIm = loadImage("eye.png");
     eyeRIm.resize(80, 0);
+
+    LHealth = RHealth = maxHealth;
+    eyeLHealth = new PImage[maxHealth];
+    eyeRHealth = new PImage[maxHealth];
+    PImage eyeRed = loadImage("eyeRed.png");
+    for (int i =0;i<maxHealth;++i){
+      eyeLHealth[i] = eyeRed.get();
+      eyeLHealth[i].loadPixels();
+      for (int j =0;j<eyeLHealth[i].pixels.length;++j){
+        float red = red(eyeLHealth[i].pixels[j]);
+        float green = green(eyeLHealth[i].pixels[j]);
+        float blue = blue(eyeLHealth[i].pixels[j]);
+        float alpha = alpha(eyeLHealth[i].pixels[j]);
+        eyeLHealth[i].pixels[j] = color(red,green,blue,(alpha!=0? 255*(i)/maxHealth:0));
+      }
+      eyeLHealth[i].updatePixels();
+    }
   }
 
   void mouthLocalUpdate() {
@@ -315,6 +339,7 @@ class Face {
     rect(0, 0, 7*eyebroWidth, 4*eyebroHeight);
     popMatrix();
 
+    //Right eye
     pushMatrix();
     translate(coorR.x, coorR.y);
     rotate(-frame.z);
@@ -322,11 +347,13 @@ class Face {
     image(eyeRIm,-eyeRIm.width/2,-eyeRIm.height/2);
     popMatrix();
 
+    //Left eye
     pushMatrix();
     translate(coorL.x, coorL.y);
     rotate(-frame.z);
     ellipse(0, 0, eyeWidth*3, eyeHeight*3);
     image(eyeLIm,-eyeLIm.width/2,-eyeLIm.height/2);
+    if (HP>0) image(eyeHealthL,-eyeHealthL.width/2,-eyeHealthL.height/2);
     popMatrix();
 
     fill(255, 101, 41);

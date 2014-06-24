@@ -65,9 +65,9 @@ void setup() {
 
 void draw() {  
   
-
-  
-  background(back);
+  println(frameRate);
+//  background(back);
+  image(back,0,0);
   stroke(0);
   box2d.step();
   face.track1();
