@@ -7,7 +7,7 @@ class Face {
   // num faces found
   int found;
 
-  // pose
+  // poses
   float poseScale;
   PVector posePosition = new PVector();
   PVector poseOrientation = new PVector();
