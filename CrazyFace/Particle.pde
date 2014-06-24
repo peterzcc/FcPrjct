@@ -21,10 +21,10 @@ class Particle {
   Boolean destroyed = false;
   Boolean exploded = false;
   Boolean track=false;
-  
+
   float box2dw=15;
   float box2dh=18;
-  Particle(){
+  Particle() {
   }
   Particle(float x, float y, float r_) {
     r = r_;
@@ -34,7 +34,7 @@ class Particle {
     animation=new Animation(monsterImages, 12);
     explosion=new Explosion(explosionImages, 26);
     track = random(1)<level/5.0;
- }
+  }
 
   // This function removes the particle from the box2d world
   void killBody() {
@@ -53,7 +53,7 @@ class Particle {
   void inMouthCheck(Face face) {
     if (!inMouse) {
       Vec2 pos = box2d.getBodyPixelCoord(body);
-      inMouse = inPolyCheck(pos.x, pos.y,face.gmouth);
+      inMouse = inPolyCheck(pos.x, pos.y, face.gmouth);
     }
   }
 
@@ -62,8 +62,8 @@ class Particle {
     if (inPolyCheck(pos.x, pos.y, face.geyeL)) {
       --face.LHealth;
       inEyes=true;
-    }else 
-    if ( inPolyCheck(pos.x, pos.y, face.geyeR)){
+    } else 
+      if ( inPolyCheck(pos.x, pos.y, face.geyeR)) {
       --face.RHealth;
       inEyes = true;
     }
@@ -74,10 +74,13 @@ class Particle {
     Vec2 pos = box2d.getBodyPixelCoord(body);
     // Is it off the bottom of the screen?
     if (pos.y > height+r*2 || pos.x<-50 || pos.x>width+50 
-          || eaten
-          || inEyes
-          ||exploded) {
+      || eaten
+      || inEyes
+      ||exploded) {
       if (eaten||exploded) ++score;
+      if (eaten) { eatSound.rewind(); eatSound.play();
+      }
+      if (inEyes){hurtSound.rewind();hurtSound.play();}
       killBody();
       return true;
     }
@@ -96,23 +99,21 @@ class Particle {
     noFill();
     stroke(0);
     strokeWeight(1);
-    
+
     float w = box2d.scalarWorldToPixels(box2dw*2);
     float h = box2d.scalarWorldToPixels(box2dh*2);
-    
+
     if (hitted)
     {
-      if (destroyed){
-        exploded=explosion.display(-40,-40);
-      }
-      else image(red, -w/2,-h/2-5);
-    } 
-    else {
-      animation.display(-w/2,-h/2-5, 0.2);
+      if (destroyed) {
+        exploded=explosion.display(-40, -40);
+      } else image(red, -w/2, -h/2-5);
+    } else {
+      animation.display(-w/2, -h/2-5, 0.2);
     }
-//    stroke(255);
-//    rectMode(CENTER);
-//    rect(0,0,w,h);
+    //    stroke(255);
+    //    rectMode(CENTER);
+    //    rect(0,0,w,h);
     popMatrix();
   }
 
@@ -140,7 +141,6 @@ class Particle {
     fd.restitution = 0.3; // Restitution is bounciness
 
     body.createFixture(fd);
-
   }
 
   void move(Vec2 target) {

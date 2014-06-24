@@ -1,3 +1,10 @@
+import ddf.minim.spi.*;
+import ddf.minim.signals.*;
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.ugens.*;
+import ddf.minim.effects.*;
+
 
 
 import oscP5.*;
@@ -25,19 +32,15 @@ int score=0;
 int level = 0;
 Boolean playing = false;
 
-PShape mouthDraw;
-PShape leftEye; 
-PShape rightEye;
-PShape leftBro;
-PShape rightBro;
+PShape mouthDraw; PShape leftEye;  PShape rightEye;PShape leftBro; PShape rightBro;
 float step=0;
 
-PImage[] monsterImages;
-PImage[] explosionImages;
-PImage[] eyesImages;
+PImage[] monsterImages; PImage[] explosionImages; PImage[] eyesImages;
 PImage red;
 PImage[] monster5;
 PImage back;
+
+Minim minim; AudioPlayer eatSound,exploSound,hurtSound;
 
 void setup() {
   size(1024, 768, P2D);
@@ -61,6 +64,11 @@ void setup() {
   monster5= readMonster5Images(7, 100, 0);
   back = loadImage("beijing.png");
   face = new Face();
+  
+  minim = new Minim(this);
+  eatSound = minim.loadFile("eat.wav");
+  exploSound = minim.loadFile("explosion.wav");
+  hurtSound = minim.loadFile("scream.wav");
 }
 
 void draw() {  
@@ -122,12 +130,17 @@ void beginContact(Contact cp) {
     if (p1.hitted==true) {
       p1.destroyed=true;
       p2.hitted=true;
+      exploSound.rewind();
+      exploSound.play();
     } else 
       if (p2.hitted==true) {
       p2.destroyed = true;
       p1.hitted=true;
+      exploSound.rewind();
+      exploSound.play();
     }
-  } else if (o1.getClass()==Weapon.class&& o2.getClass()==Particle.class) {
+  } 
+  else if (o1.getClass()==Weapon.class&& o2.getClass()==Particle.class) {
     Particle p2=(Particle) o2;
     p2.hitted=true;
     p2.destroyed=true;
