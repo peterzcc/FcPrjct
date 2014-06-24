@@ -2,7 +2,7 @@ class BallMonster
 {
 
   Body body;
-  float r=25;
+  float r=45;
   Animation animation;
   Explosion explosion;
   Boolean eaten=false;
@@ -32,11 +32,15 @@ class BallMonster
     pushMatrix();
     translate(pos.x, pos.y);
     rotate(-a);
-    animation.display(-50,-40, 0.2);
-//    stroke(255);
-//    noFill();
-//    ellipseMode(RADIUS );
-//    ellipse(0, 0, r, r);
+    imageMode(CENTER );
+    animation.display(-5,-10, 0.2);
+    imageMode(CORNER );
+    /*
+    stroke(255);
+    noFill();
+    ellipseMode(RADIUS );
+    ellipse(0, 0, r, r);
+    */
     popMatrix();
   }
   void makeBody(float x, float y) {

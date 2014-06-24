@@ -27,7 +27,7 @@ Face face;
 ArrayList<Particle> particles;
 ArrayList<Weapon> weapons;
 ArrayList<BallMonster> ballMonsters;
-
+ArrayList<Worm> worms = new ArrayList<Worm>();
 int score=0;
 int level = 0;
 Boolean playing = false;
@@ -37,7 +37,7 @@ float step=0;
 
 PImage[] monsterImages; PImage[] explosionImages; PImage[] eyesImages;
 PImage red;
-PImage[] monster5;
+PImage[] monster5,wormIm;
 PImage back;
 
 Minim minim; AudioPlayer eatSound,exploSound,hurtSound;
@@ -56,12 +56,14 @@ void setup() {
   weapons = new ArrayList<Weapon>();
   ballMonsters = new ArrayList<BallMonster>();
 
-  monsterImages = readImages("heihei", 12, 30, 0);
-  explosionImages = readExpImages(26, 100, 0);
+  monsterImages = readImages("heihei", 12, 48, 0);
+  explosionImages = readExpImages(26, 160, 0);
   eyesImages = readEyeImages("eye", 14, 20, 0);
   red = loadImage("red.png");
-  red.resize(30, 0);
-  monster5= readMonster5Images(7, 100, 0);
+  red.resize(48, 0);
+  monster5= readMonster5Images(7, 160, 0);
+  wormIm = new PImage[1];wormIm[0] = loadImage("worm.png" );wormIm[0].resize(400,0);
+  
   back = loadImage("beijing.png");
   face = new Face();
   

@@ -99,22 +99,29 @@ class Particle {
     noFill();
     stroke(0);
     strokeWeight(1);
-
+    
+    /*
     float w = box2d.scalarWorldToPixels(box2dw*2);
     float h = box2d.scalarWorldToPixels(box2dh*2);
-
+    */
+    imageMode(CENTER );
     if (hitted)
     {
       if (destroyed) {
-        exploded=explosion.display(-40, -40);
-      } else image(red, -w/2, -h/2-5);
+        exploded=explosion.display(0, 0);
+      } else image(red,0, 0-5);
     } else {
-      animation.display(-w/2, -h/2-5, 0.2);
+      animation.display(0, 0-5, 0.2);
     }
-    //    stroke(255);
-    //    rectMode(CENTER);
-    //    rect(0,0,w,h);
+    imageMode(CORNER );
+    /*
+    stroke(255);
+    rectMode(CENTER);
+    rect(0,0,w,h);
+    */
+    
     popMatrix();
+    
   }
 
   void makeBody(float x, float y, float r) {
@@ -129,8 +136,8 @@ class Particle {
 
     // Make the body's shape a circle
     PolygonShape cs = new PolygonShape();
-    box2dw=box2d.scalarPixelsToWorld(0.5*r);
-    box2dh=box2d.scalarPixelsToWorld(0.6*r);
+    box2dw=box2d.scalarPixelsToWorld(1.6*0.5*r);
+    box2dh=box2d.scalarPixelsToWorld(1.6*0.6*r);
     cs.setAsBox(box2dw, box2dh);
 
     FixtureDef fd = new FixtureDef();

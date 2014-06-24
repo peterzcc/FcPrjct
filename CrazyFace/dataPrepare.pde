@@ -18,6 +18,7 @@ void handleSpecialSkill() {
 }
 
 void addMonsters() {
+  /*
   if (random(1) < (1.5)/100.0) {
     Particle p = new Particle(width+20, random(0+20, height-20), 30);
     particles.add(p);
@@ -31,10 +32,18 @@ void addMonsters() {
     p.body.setLinearVelocity(new Vec2(random(5, 10), random(-5, 5)));
     p.body.setAngularVelocity(random(-1, 1));
   }
-  if (random(1) < (0.5)/100.0) {
-    BallMonster w = new BallMonster(-20, random(0+20, height-20), random(5, 10), random(-5, 5));
+  
+  if (random(1) < (1)/100.0) {
+    BallMonster w = new BallMonster(-20, random(0+20, height-20), random(21, 33), random(-2, 2));
     ballMonsters.add(w);
   }
+  */
+  
+  if (random(1) < (0.5)/100.0) {
+    Worm w = new Worm(width+20, random(0+20, height-20), -random(5, 10), random(-5, 5));
+    worms.add(w);
+  }
+  
 }
 
 void updateMonsters() {
@@ -45,6 +54,16 @@ void updateMonsters() {
       ballMonsters.remove(i);
     }
   }  
+
+  for (int i = worms.size ()-1; i >= 0; i--) {
+    Worm w = worms.get(i);
+    w.display();
+    w.adjust();
+    if (w.done()) {
+      worms.remove(i);
+    }
+  }
+  
   for (int i = particles.size ()-1; i >= 0; i--) {
     Particle p = particles.get(i);
     p.display();
@@ -58,6 +77,7 @@ void updateMonsters() {
       particles.remove(i);
     }
   }
+  
 }
 
 PImage[]  readImages(String prefix, int num, int scaleX, int scaleY) {
@@ -120,6 +140,18 @@ Vec2[] PVectorToVec2(PVector[] points) {
     result[points.length-1-i]=box2d.coordPixelsToWorld(points[i].x, points[i].y);
   }
   return result;
+}
+
+float getAngle(float x,float y)
+{
+  float a;
+  if (x <=0.000001&&x>=-0.000001) {
+  a = (y>0? PI/2:-PI/2);
+  return a;
+}
+  float k = y/x;
+  a = atan((x>0? k:-k));
+  return a;
 }
 
 //_________________________________________________________________________
