@@ -93,10 +93,10 @@ class Face {
     eyeRIm.resize(80, 0);
 
     LHealth = RHealth = maxHealth;
-    eyeLHealth = new PImage[maxHealth];
-    eyeRHealth = new PImage[maxHealth];
-    PImage eyeRed = loadImage("eyeRed.png");
-    for (int i =0;i<maxHealth;++i){
+    eyeLHealth = new PImage[maxHealth+1];
+    eyeRHealth = new PImage[maxHealth+1];
+    PImage eyeRed = loadImage("eyeRed.png"); eyeRed.resize(80, 0);
+    for (int i =0;i<=maxHealth;++i){
       eyeLHealth[i] = eyeRed.get();
       eyeLHealth[i].loadPixels();
       for (int j =0;j<eyeLHealth[i].pixels.length;++j){
@@ -104,9 +104,22 @@ class Face {
         float green = green(eyeLHealth[i].pixels[j]);
         float blue = blue(eyeLHealth[i].pixels[j]);
         float alpha = alpha(eyeLHealth[i].pixels[j]);
-        eyeLHealth[i].pixels[j] = color(red,green,blue,(alpha!=0? 255*(i)/maxHealth:0));
+        eyeLHealth[i].pixels[j] = color(red,green,blue,(alpha!=0? 255.0*(maxHealth-i)/maxHealth:0));
       }
       eyeLHealth[i].updatePixels();
+    }
+  
+      for (int i =0;i<=maxHealth;++i){
+      eyeRHealth[i] = eyeRed.get();
+      eyeRHealth[i].loadPixels();
+      for (int j =0;j<eyeRHealth[i].pixels.length;++j){
+        float red = red(eyeRHealth[i].pixels[j]);
+        float green = green(eyeRHealth[i].pixels[j]);
+        float blue = blue(eyeRHealth[i].pixels[j]);
+        float alpha = alpha(eyeRHealth[i].pixels[j]);
+        eyeRHealth[i].pixels[j] = color(red,green,blue,(alpha!=0? 255.0*(maxHealth-i)/maxHealth:0));
+      }
+      eyeRHealth[i].updatePixels();
     }
   }
 
@@ -345,6 +358,8 @@ class Face {
     rotate(-frame.z);
     ellipse(0, 0, eyeWidth*3, eyeHeight*3);
     image(eyeRIm,-eyeRIm.width/2,-eyeRIm.height/2);
+    if (RHealth>0) image(eyeRHealth[RHealth],-eyeRHealth[RHealth].width/2,-eyeRHealth[RHealth].height/2);
+    else image(eyeRHealth[0],-eyeRHealth[0].width/2,-eyeRHealth[0].height/2);
     popMatrix();
 
     //Left eye
@@ -353,7 +368,8 @@ class Face {
     rotate(-frame.z);
     ellipse(0, 0, eyeWidth*3, eyeHeight*3);
     image(eyeLIm,-eyeLIm.width/2,-eyeLIm.height/2);
-    if (HP>0) image(eyeHealthL,-eyeHealthL.width/2,-eyeHealthL.height/2);
+    if (LHealth>0) image(eyeLHealth[LHealth],-eyeLHealth[LHealth].width/2,-eyeLHealth[LHealth].height/2);
+    else  image(eyeLHealth[0],-eyeLHealth[0].width/2,-eyeLHealth[0].height/2);
     popMatrix();
 
     fill(255, 101, 41);

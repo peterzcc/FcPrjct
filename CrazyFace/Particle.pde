@@ -59,10 +59,13 @@ class Particle {
 
   void inEyesCheck(Face face) {
     Vec2 pos = box2d.getBodyPixelCoord(body);
-    if (inPolyCheck(pos.x, pos.y, face.geyeL)||
-      inPolyCheck(pos.x, pos.y, face.geyeR)) {
+    if (inPolyCheck(pos.x, pos.y, face.geyeL)) {
+      --face.LHealth;
       inEyes=true;
-      --HP;
+    }else 
+    if ( inPolyCheck(pos.x, pos.y, face.geyeR)){
+      --face.RHealth;
+      inEyes = true;
     }
   }
   // Is the particle ready for deletion?
