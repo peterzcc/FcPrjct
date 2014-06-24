@@ -1,3 +1,5 @@
+import g4p_controls.*;
+
 
 import oscP5.*;
 OscP5 oscP5;
@@ -22,6 +24,7 @@ ArrayList<BallMonster> ballMonsters;
 int score=0;
 int HP = 10;
 int level = 0;
+Boolean playing = false;
 
 PShape mouthDraw;
 PShape leftEye; 
@@ -62,9 +65,9 @@ void setup() {
 }
 
 void draw() {  
+  
 
-//  println(frameRate);
-  level = score/10+1;
+  
   background(back);
   stroke(0);
   box2d.step();
