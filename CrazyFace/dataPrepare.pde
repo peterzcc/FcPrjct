@@ -12,10 +12,19 @@ void startgame() {
 
 void handleSpecialSkill() {
   if (face.eyebrowLeft<7.8 && face.mouthWidth>18.3 && random(1)<0.1) {
+    int numOfWeapons = 8;
+    /*
     for (float alpha = -PI/2+PI/10; alpha<PI/2; alpha+=PI/10 ) {
       Weapon w1 = new Weapon(face.coorL.x-60, face.coorL.y+40, alpha, -100*cos(alpha), 100*sin(alpha));
       weapons.add(w1);
       Weapon w2 = new Weapon(face.coorR.x+60, face.coorR.y+40, alpha, 100*cos(alpha), 100*sin(alpha));
+      weapons.add(w2);
+    }
+    */
+    for (float alpha = -PI/2+PI/numOfWeapons; alpha<PI/2-0.4; alpha+=PI/numOfWeapons ) {
+      Weapon w1 = new Weapon(face.coorL.x, face.coorL.y, alpha, -100*cos(alpha), 100*sin(alpha));
+      weapons.add(w1);
+      Weapon w2 = new Weapon(face.coorR.x, face.coorR.y, alpha, 100*cos(alpha), 100*sin(alpha));
       weapons.add(w2);
     }
   }
@@ -45,17 +54,17 @@ void addMonsters() {
    }
    
    if (random(1) < (0.3)/100.0) {
-   BallMonster w = new BallMonster(-20, random(0+20, height-20), random(21, 33), random(-2, 2));
+   BallMonster w = new BallMonster(-20, random(0+20, height-20), random(20, 25), random(-2, 2));
    ballMonsters.add(w);
    }
    
    
-   if (random(1) < (0.3)/100.0) {
+   if (random(1) < (0.1)/100.0) {
    Worm w = new Worm(width+20, random(0+20, height-20), -random(5, 10), random(-5, 5));
    worms.add(w);
    }
    
-  if (random(1) < (0.05)/100.0) {
+  if (random(1) < (0.1)/100.0) {
     Dog w = new Dog(width+20, random(0+20, height-20), -random(5, 10), random(-5, 5));
     dogs.add(w);
   }
@@ -64,6 +73,7 @@ void addMonsters() {
 void updateMonsters() {
   for (int i = dogs.size ()-1; i >= 0; i--) {
     Dog w = dogs.get(i);
+    w.adjust();
     w.display();
     if (w.done()) {
       dogs.remove(i);

@@ -75,11 +75,8 @@ class Dog extends Particle
   }
   
   void adjust(){
-    /*
-    Vec2 v = body.getLinearVelocity();
-    float t = getAngle(-v.x,v.y);
     float a = body.getAngle();
-    body.setAngularVelocity((-t-a)*9);
-    */
+    body.applyTorque((-a)*1000000);
+    
   }
 };

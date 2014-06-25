@@ -202,10 +202,14 @@ void beginContact(Contact cp) {
     Particle p2=(Particle) o2;
     p2.hitted=true;
     p2.destroyed=true;
+    exploSound.rewind();
+    exploSound.play();
   } else if (o2.getClass()==Weapon.class && o1.getClass()==Particle.class) {
     Particle p1=(Particle) o1;
     p1.hitted=true;
     p1.destroyed=true;
+    exploSound.rewind();
+    exploSound.play();
   }
 }
 
