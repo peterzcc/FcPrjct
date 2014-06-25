@@ -18,7 +18,7 @@ class button{
     Vec2 pos = box2d.getBodyPixelCoord(body);
     if (pos.y<0|| pos.y > displayHeight || pos.x<0 || pos.x>displayWidth) {
       killBody();   
-      ++mode;
+      mode=1;
      return true; 
   }
   return false;
@@ -67,8 +67,14 @@ void display(){
     ellipse(0,0,2*r,2*r);
     line(0,0,r,0);
      fill(0,0,255);
+
     textSize(30);
-    text("play",0,0);
+    if(mode==0){
+    text("Play",0,0);
+    }
+    else if(mode==3){
+      text("Replay",0,0);
+    }
     popMatrix();
     done();
 }

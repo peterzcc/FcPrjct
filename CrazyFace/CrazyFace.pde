@@ -30,6 +30,7 @@ int score=0;
 int level = 0;
 Boolean playing = false;
 int mode;
+int tag;
 
 PShape mouthDraw; PShape leftEye;  PShape rightEye;PShape leftBro; PShape rightBro;
 float step=0;
@@ -64,10 +65,12 @@ void setup() {
   wormIm = readEyeImages("data/worm/",11,400,0);
 //  wormIm[0] = loadImage("worm.png" );wormIm[0].resize(400,0);
   
-  dogIm = new PImage[1];dogIm[0] = loadImage("monster1.png");dogIm[0].resize(200,0);
-  
+//  dogIm = new PImage[1];dogIm[0] = loadImage("monster1.png");dogIm[0].resize(200,0);
+  dogIm = readEyeImages("data/dog/",10,200,0);
   back = loadImage("beijing.png");
   face = new Face();
+  mode=0;
+  tag=0;
   
   minim = new Minim(this);
   eatSound = minim.loadFile("eat.wav");
@@ -76,36 +79,81 @@ void setup() {
   
   button1= new button(displayWidth/2-400,displayHeight/2-200,50);
   
-
 }
 
 void draw() {  
 //  background(back);
   image(back,0,0);
   stroke(0);
-  box2d.step();
-  face.track1();
-  face.track2();
-  face.update();
-  if (face.found>0) {
-    face.display();
+  if((mode==1||mode==2)&&face.LHealth<0&&face.RHealth<0){
+    mode=3;
+    tag=1;
   }
   
- if(mode==0){
+  if(mode==1&&face.found==0){
+    mode=2;
+  }
+  if(mode==2&&face.found>0){
+    mode=1;
+  }
+  if(mode==2){
+    box2d.step();
+    addMonsters();
+    updateMonsters();
+  }
+  if(mode==3){
+    if(tag==1){
+      face = new Face();
+      particles = new ArrayList<Particle>();
+      weapons = new ArrayList<Weapon>();
+      ballMonsters = new ArrayList<BallMonster>();
+      button1= new button(displayWidth/2-400,displayHeight/2-200,50);
+      score=0;
+      level=1;
+      tag=0;  
+      
+    }
+    box2d.step();
+    face.track1();
+    face.track2();
+    face.update();
+    if (face.found>0) {
+      face.display();
+    }
+    startdisplay();
+    startgame();
+  }
+  
+  
+else if(mode==0){
+    box2d.step();
+    face.track1();
+    face.track2();
+    face.update();
+    if (face.found>0) {
+      face.display();
+    }
     startdisplay();
     startgame();
     
-  }else
-  if (mode==1){
-  addMonsters();
-  updateMonsters();
-  handleSpecialSkill();
+  }else if (mode==1){
+    box2d.step();
+    face.track1();
+    face.track2();
+    face.update();
+    if (face.found>0) {
+      face.display();
+    }
+    addMonsters();
+    updateMonsters();
+    handleSpecialSkill();
+  }
+  
   fill(0, 0, 255);
   textSize(30 );
   text("Score: "+score, 30, 50);
   text("Level "+level, width/2-50, 50);
-  }
-
+  println(face.RHealth + " " + face.LHealth);
 
 }
 

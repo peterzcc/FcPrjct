@@ -84,6 +84,7 @@ class BallMonster
     if (inMouse) {
       Vec2 pos = box2d.getBodyPixelCoord(body);
       eaten = !inPolyCheck(pos.x, pos.y, face.gmouth);
+      println("Eat ball monster!");
     }
   }
 
@@ -96,7 +97,10 @@ class BallMonster
       || eaten
       || inEyes
       ||exploded) {
+      
+      if (eaten){
       --face.LHealth; --face.RHealth;
+      }
       killBody();
       return true;
     }

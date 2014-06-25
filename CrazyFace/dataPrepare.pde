@@ -1,3 +1,5 @@
+
+
 void startdisplay() {
   button1.display();
 }
@@ -6,6 +8,7 @@ void startgame() {
   if (mousePressed==true&&mouseX>=displayWidth/2-100 && mouseX<=displayWidth/2+100 && mouseY>=displayHeight/2-50 &&mouseY<=displayHeight/2+50)
     mode++;
 }
+
 
 void handleSpecialSkill() {
   if (face.eyebrowLeft<7.8 && face.mouthWidth>18.3 && random(1)<0.1) {
@@ -52,7 +55,7 @@ void addMonsters() {
    worms.add(w);
    }
    
-  if (random(1) < (1)/100.0) {
+  if (random(1) < (0.05)/100.0) {
     Dog w = new Dog(width+20, random(0+20, height-20), -random(5, 10), random(-5, 5));
     dogs.add(w);
   }
@@ -62,7 +65,6 @@ void updateMonsters() {
   for (int i = dogs.size ()-1; i >= 0; i--) {
     Dog w = dogs.get(i);
     w.display();
-    w.adjust();
     if (w.done()) {
       dogs.remove(i);
     }

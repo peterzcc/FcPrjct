@@ -87,8 +87,6 @@ class Face {
     }
     makeBodyR();
     makeBodyL();
-//    eyeLAni = new Animation(eyesImages, 14);
-//    eyeRAni = new Animation(eyesImages, 14);
     eyesImages = readEyeImages("data/eye/", 28, 80, 0);
     
     eyeLAni = new Animation(eyesImages);

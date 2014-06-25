@@ -46,6 +46,7 @@ class Particle {
     if (inMouse) {
       Vec2 pos = box2d.getBodyPixelCoord(body);
       eaten = !inPolyCheck(pos.x, pos.y, face.gmouth);
+      
     }
   }
 
@@ -67,6 +68,7 @@ class Particle {
       --face.RHealth;
       inEyes = true;
     }
+   
   }
   // Is the particle ready for deletion?
   boolean done() {
