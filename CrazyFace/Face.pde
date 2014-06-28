@@ -5,7 +5,7 @@ import oscP5.*;
 class Face {
 
   // num faces found
-  int found;
+  int found=0;
 
   // poses
   float poseScale;

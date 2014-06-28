@@ -52,20 +52,27 @@ void addMonsters() {
    p.body.setLinearVelocity(new Vec2(random(5, 10), random(-5, 5)));
    p.body.setAngularVelocity(random(-1, 1));
    }
-   
    if (random(1) < (0.3)/100.0) {
+   Particle p = new Particle(random(0+50,width-50), -20, 30);
+   p.animation=new Animation(monsterImages, 12);
+   particles.add(p);
+   p.body.setLinearVelocity(new Vec2(random(-5, 5), random(-5, -10)));
+   p.body.setAngularVelocity(random(-1, 1));
+   }
+   
+   if (random(1) < (0.2)/100.0) {
    BallMonster w = new BallMonster(-20, random(0+20, height-20), random(20, 25), random(-2, 2));
    ballMonsters.add(w);
    }
    
    
    if (random(1) < (0.1)/100.0) {
-   Worm w = new Worm(width+20, random(0+20, height-20), -random(5, 10), random(-5, 5));
+   Worm w = new Worm(width+20, random(0+20, height/2), -random(5, 10), random(-5, 1));
    worms.add(w);
    }
    
-  if (random(1) < (0.1)/100.0) {
-    Dog w = new Dog(width+20, random(0+20, height-20), -random(5, 10), random(-5, 5));
+  if (random(1) < (0.08)/100.0) {
+    Dog w = new Dog(width+20, random(2/height, height-20), -random(5, 10), random(-1, 5));
     dogs.add(w);
   }
 }

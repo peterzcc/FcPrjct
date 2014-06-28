@@ -29,7 +29,7 @@ class Weapon {
     // Draw particle as a trail
     beginShape();
     fill(0,255,0);
-    strokeWeight(2);
+    strokeWeight(3);
     stroke(0,255,0);
     for (int i = 0; i < trail.length; i++) {
       vertex(trail[i].x,trail[i].y);

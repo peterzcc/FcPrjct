@@ -60,21 +60,24 @@ void display(){
     pushMatrix();
     translate(pos.x, pos.y);
     rotate(-a);
-    noFill();
+    fill(255,255,0);
     stroke(0);
     strokeWeight(1);
-    
-    ellipse(0,0,2*r,2*r);
-    line(0,0,r,0);
-     fill(0,0,255);
-
-    textSize(30);
-    if(mode==0){
-    text("Play",0,0);
-    }
-    else if(mode==3){
-      text("Replay",0,0);
-    }
+    imageMode(CENTER);
+    image(start_button,0,0);
+    imageMode(CORNER);
+   // ellipse(0,0,2*r,2*r);
+//    line(0,0,r,0);
+//     fill(0,0,255);
+//    textAlign( CENTER );
+//    textSize(30);
+//    if(mode==0){
+//    text("Play!",0,10);
+//    }
+//    else if(mode==3){
+//      text("Replay!",0,0);
+//    }
+//    textAlign(LEFT );
     popMatrix();
     done();
 }
